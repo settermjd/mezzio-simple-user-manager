@@ -1,0 +1,594 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="5.17.0@c620f6e80d0abfca532b00bda366062aaedf6e5d">
+  <file src="src/Composer/FileSystemBasedComposerPackage.php">
+    <MixedArrayAccess>
+      <code><![CDATA[$package[$key]['psr-4'][$namespace]]]></code>
+    </MixedArrayAccess>
+    <MixedArrayAssignment>
+      <code><![CDATA[$package[$key]['psr-4']]]></code>
+      <code><![CDATA[$package[$key]['psr-4'][$namespace]]]></code>
+    </MixedArrayAssignment>
+    <MixedInferredReturnType>
+      <code>mixed[]</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement>
+      <code>json_decode($contents, true, 512, JSON_THROW_ON_ERROR)</code>
+    </MixedReturnStatement>
+  </file>
+  <file src="src/ConfigInjector/AbstractInjector.php">
+    <LessSpecificImplementedReturnType>
+      <code>int[]</code>
+    </LessSpecificImplementedReturnType>
+    <PropertyTypeCoercion>
+      <code>$modules</code>
+      <code>$modules</code>
+    </PropertyTypeCoercion>
+  </file>
+  <file src="src/CreateHandler/CreateHandler.php">
+    <MixedArgument>
+      <code>$class</code>
+      <code>$value</code>
+    </MixedArgument>
+    <MixedArgumentTypeCoercion>
+      <code>$key</code>
+    </MixedArgumentTypeCoercion>
+    <MixedAssignment>
+      <code>$value</code>
+    </MixedAssignment>
+  </file>
+  <file src="src/CreateHandler/CreateHandlerCommand.php">
+    <MixedArgument>
+      <code>$handler</code>
+      <code>$handler</code>
+      <code>$handler</code>
+      <code>$handler</code>
+      <code>$templateExtension</code>
+      <code>$templateName</code>
+      <code>$templateNamespace</code>
+    </MixedArgument>
+    <MixedAssignment>
+      <code>$handler</code>
+      <code><![CDATA[$substitutions['%template-name%']]]></code>
+      <code><![CDATA[$substitutions['%template-namespace%']]]></code>
+      <code>$templateExtension</code>
+      <code>$templateName</code>
+      <code>$templateNamespace</code>
+    </MixedAssignment>
+    <PossiblyNullArgument>
+      <code>$templateName</code>
+      <code>$templateNamespace</code>
+    </PossiblyNullArgument>
+    <PossiblyNullReference>
+      <code>find</code>
+    </PossiblyNullReference>
+    <UnresolvableInclude>
+      <code>require_once $path</code>
+      <code>require_once $path</code>
+    </UnresolvableInclude>
+  </file>
+  <file src="src/CreateHandler/CreateTemplate.php">
+    <ArgumentTypeCoercion>
+      <code>$handler</code>
+    </ArgumentTypeCoercion>
+    <InvalidConstantAssignmentValue>
+      <code>KNOWN_RENDERERS = [
+        PlatesRenderer::class,
+        TwigRenderer::class,
+        LaminasViewRenderer::class,
+    ]</code>
+    </InvalidConstantAssignmentValue>
+    <MixedArgument>
+      <code>$config</code>
+      <code>$path</code>
+      <code>$paths</code>
+    </MixedArgument>
+    <MixedArrayAccess>
+      <code><![CDATA[$config['templates']['paths'][$templateNamespace]]]></code>
+    </MixedArrayAccess>
+    <MixedAssignment>
+      <code>$config</code>
+      <code>$path</code>
+      <code>$paths</code>
+    </MixedAssignment>
+    <MixedInferredReturnType>
+      <code>string</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement>
+      <code><![CDATA[$config['templates']['extension']]]></code>
+    </MixedReturnStatement>
+    <PossiblyInvalidArgument>
+      <code>$config</code>
+    </PossiblyInvalidArgument>
+    <PossiblyNullArgument>
+      <code>$rendererType</code>
+      <code>$type</code>
+    </PossiblyNullArgument>
+    <UndefinedClass>
+      <code>LaminasViewRenderer</code>
+      <code>PlatesRenderer</code>
+      <code>TwigRenderer</code>
+      <code>TwigRenderer</code>
+    </UndefinedClass>
+  </file>
+  <file src="src/CreateMiddleware/CreateMiddleware.php">
+    <MixedArgument>
+      <code>$class</code>
+    </MixedArgument>
+    <MixedArgumentTypeCoercion>
+      <code>[$namespace, $class]</code>
+    </MixedArgumentTypeCoercion>
+  </file>
+  <file src="src/CreateMiddleware/CreateMiddlewareCommand.php">
+    <MixedArgument>
+      <code>$middleware</code>
+      <code>$middleware</code>
+    </MixedArgument>
+    <MixedAssignment>
+      <code>$middleware</code>
+    </MixedAssignment>
+    <PossiblyNullReference>
+      <code>find</code>
+    </PossiblyNullReference>
+    <UnresolvableInclude>
+      <code>require $path</code>
+    </UnresolvableInclude>
+  </file>
+  <file src="src/Factory/ConfigInjector.php">
+    <MixedArgument>
+      <code>$config</code>
+    </MixedArgument>
+    <MixedArrayAccess>
+      <code><![CDATA[$config['dependencies']]]></code>
+      <code><![CDATA[$config['dependencies']['factories']]]></code>
+    </MixedArrayAccess>
+    <MixedArrayAssignment>
+      <code>$config[$class]</code>
+    </MixedArrayAssignment>
+    <MixedAssignment>
+      <code>$config</code>
+      <code>$config</code>
+      <code>$factory</code>
+    </MixedAssignment>
+    <MixedOperand>
+      <code>$factory</code>
+    </MixedOperand>
+  </file>
+  <file src="src/Factory/Create.php">
+    <ArgumentTypeCoercion>
+      <code>$className</code>
+    </ArgumentTypeCoercion>
+    <PossiblyFalseOperand>
+      <code><![CDATA[strrpos($class, '\\')]]></code>
+    </PossiblyFalseOperand>
+  </file>
+  <file src="src/Factory/CreateFactoryCommand.php">
+    <PossiblyNullArgument>
+      <code>$configFile</code>
+    </PossiblyNullArgument>
+  </file>
+  <file src="src/Factory/CreateFactoryCommandFactory.php">
+    <MixedArgument>
+      <code><![CDATA[$container->get(Create::class)]]></code>
+    </MixedArgument>
+  </file>
+  <file src="src/Factory/FactoryClassGenerator.php">
+    <ArgumentTypeCoercion>
+      <code>$className</code>
+    </ArgumentTypeCoercion>
+    <MixedArgument>
+      <code>$argument</code>
+      <code>$fqcn</code>
+      <code>$import</code>
+    </MixedArgument>
+    <MixedAssignment>
+      <code>$fqcn</code>
+    </MixedAssignment>
+    <PossiblyFalseArgument>
+      <code><![CDATA[strrpos($className, '\\')]]></code>
+    </PossiblyFalseArgument>
+    <PossiblyFalseOperand>
+      <code><![CDATA[strrpos($className, '\\')]]></code>
+    </PossiblyFalseOperand>
+    <UndefinedMethod>
+      <code>getName</code>
+    </UndefinedMethod>
+  </file>
+  <file src="src/MigrateInteropMiddleware/ConvertInteropMiddleware.php">
+    <MixedArgument>
+      <code>$file</code>
+    </MixedArgument>
+    <MixedAssignment>
+      <code>$file</code>
+    </MixedAssignment>
+  </file>
+  <file src="src/MigrateInteropMiddleware/MigrateInteropMiddlewareCommand.php">
+    <MixedAssignment>
+      <code>$path</code>
+    </MixedAssignment>
+    <MixedOperand>
+      <code>$path</code>
+    </MixedOperand>
+    <PossiblyNullOperand>
+      <code><![CDATA[$this->projectRoot]]></code>
+    </PossiblyNullOperand>
+  </file>
+  <file src="src/MigrateMiddlewareToRequestHandler/ConvertMiddleware.php">
+    <MixedArgument>
+      <code>$file</code>
+    </MixedArgument>
+    <MixedAssignment>
+      <code>$file</code>
+    </MixedAssignment>
+  </file>
+  <file src="src/MigrateMiddlewareToRequestHandler/MigrateMiddlewareToRequestHandlerCommand.php">
+    <MixedAssignment>
+      <code>$path</code>
+    </MixedAssignment>
+    <MixedOperand>
+      <code>$path</code>
+    </MixedOperand>
+    <PossiblyInvalidDocblockTag>
+      <code>@var null|string Project root against which to scan.</code>
+    </PossiblyInvalidDocblockTag>
+  </file>
+  <file src="src/Module/CommandCommonOptions.php">
+    <MixedArgument>
+      <code>$command::HELP_ARG_MODULE</code>
+      <code>$modulesPath</code>
+    </MixedArgument>
+    <MixedArrayAccess>
+      <code><![CDATA[$config[self::class]['--modules-path']]]></code>
+    </MixedArrayAccess>
+    <MixedAssignment>
+      <code>$configuredModulesPath</code>
+      <code>$modulesPath</code>
+    </MixedAssignment>
+    <UndefinedConstant>
+      <code>$command::HELP_ARG_MODULE</code>
+    </UndefinedConstant>
+  </file>
+  <file src="src/Module/CreateCommand.php">
+    <MixedArgument>
+      <code>$module</code>
+      <code>$parentNamespace</code>
+    </MixedArgument>
+    <MixedAssignment>
+      <code>$composer</code>
+      <code>$module</code>
+      <code>$parentNamespace</code>
+    </MixedAssignment>
+    <PossiblyInvalidArgument>
+      <code><![CDATA[$this->config]]></code>
+    </PossiblyInvalidArgument>
+    <PossiblyNullReference>
+      <code>find</code>
+    </PossiblyNullReference>
+    <UndefinedDocblockClass>
+      <code>array|ArrayAccess</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="src/Module/CreateCommandFactory.php">
+    <MixedArgument>
+      <code><![CDATA[$container->get('config')]]></code>
+    </MixedArgument>
+  </file>
+  <file src="src/Module/DeregisterCommand.php">
+    <MixedArgument>
+      <code>$composer</code>
+      <code>$module</code>
+      <code>$module</code>
+    </MixedArgument>
+    <MixedArgumentTypeCoercion>
+      <code><![CDATA[[$composer, 'dump-autoload']]]></code>
+    </MixedArgumentTypeCoercion>
+    <MixedAssignment>
+      <code>$composer</code>
+      <code>$module</code>
+    </MixedAssignment>
+  </file>
+  <file src="src/Module/RegisterCommand.php">
+    <MixedArgument>
+      <code>$composer</code>
+      <code>$module</code>
+      <code>$module</code>
+      <code>$module</code>
+      <code>$modulePath</code>
+    </MixedArgument>
+    <MixedArgumentTypeCoercion>
+      <code><![CDATA[[$composer, 'dump-autoload']]]></code>
+    </MixedArgumentTypeCoercion>
+    <MixedAssignment>
+      <code>$composer</code>
+      <code>$exactPath</code>
+      <code>$module</code>
+      <code>$modulePath</code>
+    </MixedAssignment>
+  </file>
+  <file src="src/TemplateResolutionTrait.php">
+    <MixedAssignment>
+      <code>$renderer</code>
+    </MixedAssignment>
+    <PossiblyFalseOperand>
+      <code><![CDATA[strrpos($class, '\\')]]></code>
+    </PossiblyFalseOperand>
+  </file>
+  <file src="test/Composer/FileSystemBasedComposerPackageTest.php">
+    <MixedArgument>
+      <code><![CDATA[$package[$key]['psr-4']]]></code>
+    </MixedArgument>
+    <MixedInferredReturnType>
+      <code>array</code>
+      <code>array</code>
+      <code>mixed[]</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement>
+      <code>json_decode($json, true, 512, JSON_THROW_ON_ERROR)</code>
+    </MixedReturnStatement>
+  </file>
+  <file src="test/ConfigInjector/AbstractInjectorTestCase.php">
+    <ArgumentTypeCoercion>
+      <code>$type</code>
+    </ArgumentTypeCoercion>
+  </file>
+  <file src="test/ConfigInjector/ConfigAggregatorInjectorTest.php">
+    <ImplementedReturnTypeMismatch>
+      <code><![CDATA[array<string, array<string|bool>>]]></code>
+      <code><![CDATA[array<string, array<string|bool|int>>]]></code>
+      <code><![CDATA[array<string, array<string|bool|int>>]]></code>
+    </ImplementedReturnTypeMismatch>
+    <InvalidReturnStatement>
+      <code><![CDATA[[
+            'fqcn-long-array'               => [ConfigAggregatorInjector::TYPE_CONFIG_PROVIDER, $baseContentsFqcnLongArray,               $expectedContentsFqcnLongArray],
+            'global-long-array'             => [ConfigAggregatorInjector::TYPE_CONFIG_PROVIDER, $baseContentsGloballyQualifiedLongArray,  $expectedContentsGloballyQualifiedLongArray],
+            'import-long-array'             => [ConfigAggregatorInjector::TYPE_CONFIG_PROVIDER, $baseContentsImportLongArray,             $expectedContentsImportLongArray],
+            'import-long-array-alt-indent'  => [ConfigAggregatorInjector::TYPE_CONFIG_PROVIDER, $baseContentsImportLongArrayAltIndent,    $expectedContentsImportLongArrayAltIndent],
+            'fqcn-short-array'              => [ConfigAggregatorInjector::TYPE_CONFIG_PROVIDER, $baseContentsFqcnShortArray,              $expectedContentsFqcnShortArray],
+            'global-short-array'            => [ConfigAggregatorInjector::TYPE_CONFIG_PROVIDER, $baseContentsGloballyQualifiedShortArray, $expectedContentsGloballyQualifiedShortArray],
+            'import-short-array'            => [ConfigAggregatorInjector::TYPE_CONFIG_PROVIDER, $baseContentsImportShortArray,            $expectedContentsImportShortArray],
+            'import-short-array-alt-indent' => [ConfigAggregatorInjector::TYPE_CONFIG_PROVIDER, $baseContentsImportShortArrayAltIndent,   $expectedContentsImportShortArrayAltIndent],
+
+            // see https://github.com/laminas/laminas-component-installer/issues/21
+            'inject-only-first-occurence' => [ConfigAggregatorInjector::TYPE_CONFIG_PROVIDER, $injectOnlyFirstOccurrenceInitial, $injectOnlyFirstOccurrenceExpected],
+        ]]]></code>
+      <code><![CDATA[[
+            'fqcn-long-array'    => [$fqcnLongArray,               ConfigAggregatorInjector::TYPE_CONFIG_PROVIDER],
+            'global-long-array'  => [$globallyQualifiedLongArray,  ConfigAggregatorInjector::TYPE_CONFIG_PROVIDER],
+            'import-long-array'  => [$importLongArray,             ConfigAggregatorInjector::TYPE_CONFIG_PROVIDER],
+            'fqcn-short-array'   => [$fqcnShortArray,              ConfigAggregatorInjector::TYPE_CONFIG_PROVIDER],
+            'global-short-array' => [$globallyQualifiedShortArray, ConfigAggregatorInjector::TYPE_CONFIG_PROVIDER],
+            'import-short-array' => [$importShortArray,            ConfigAggregatorInjector::TYPE_CONFIG_PROVIDER],
+        ]]]></code>
+      <code><![CDATA[[
+            'fqcn-long-array'    => [$fqcnLongArray],
+            'global-long-array'  => [$globallyQualifiedLongArray],
+            'import-long-array'  => [$importLongArray],
+            'fqcn-short-array'   => [$fqcnShortArray],
+            'global-short-array' => [$globallyQualifiedShortArray],
+            'import-short-array' => [$importShortArray],
+        ]]]></code>
+    </InvalidReturnStatement>
+    <InvalidReturnType>
+      <code><![CDATA[array<string, array<string|bool>>]]></code>
+      <code><![CDATA[array<string, array<string|bool|int>>]]></code>
+      <code><![CDATA[array<string, array<string|bool|int>>]]></code>
+    </InvalidReturnType>
+    <LessSpecificImplementedReturnType>
+      <code><![CDATA[array<string, mixed[]>]]></code>
+    </LessSpecificImplementedReturnType>
+    <LessSpecificReturnStatement>
+      <code><![CDATA[[
+            'fqcn-long-array'               => [$baseContentsFqcnLongArray,               $expectedContentsFqcnLongArray],
+            'global-long-array'             => [$baseContentsGloballyQualifiedLongArray,  $expectedContentsGloballyQualifiedLongArray],
+            'import-long-array'             => [$baseContentsImportLongArray,             $expectedContentsImportLongArray],
+            'import-long-array-alt-indent'  => [$baseContentsImportLongArrayAltIndent,    $expectedContentsImportLongArrayAltIndent],
+            'fqcn-short-array'              => [$baseContentsFqcnShortArray,              $expectedContentsFqcnShortArray],
+            'global-short-array'            => [$baseContentsGloballyQualifiedShortArray, $expectedContentsGloballyQualifiedShortArray],
+            'import-short-array'            => [$baseContentsImportShortArray,            $expectedContentsImportShortArray],
+            'import-short-array-alt-indent' => [$baseContentsImportShortArrayAltIndent,   $expectedContentsImportShortArrayAltIndent],
+        ]]]></code>
+    </LessSpecificReturnStatement>
+    <MoreSpecificReturnType>
+      <code>array</code>
+    </MoreSpecificReturnType>
+  </file>
+  <file src="test/CreateHandler/CreateTemplateTest.php">
+    <InvalidStringClass>
+      <code>new $renderer()</code>
+    </InvalidStringClass>
+    <MixedArgument>
+      <code>$config</code>
+      <code>TestHandler::class</code>
+      <code>TestHandler::class</code>
+      <code>TestHandler::class</code>
+      <code>TestHandler::class</code>
+      <code>TestHandler::class</code>
+      <code>TestHandler::class</code>
+      <code>TestHandler::class</code>
+      <code>TestHandler::class</code>
+      <code>TestHandler::class</code>
+      <code>TestHandler::class</code>
+      <code>TestHandler::class</code>
+      <code>TestHandler::class</code>
+      <code>TestHandler::class</code>
+    </MixedArgument>
+    <MixedArrayOffset>
+      <code><![CDATA[[
+            PlatesRenderer::class      => [PlatesRenderer::class, 'phtml'],
+            TwigRenderer::class        => [TwigRenderer::class, 'html.twig'],
+            LaminasViewRenderer::class => [LaminasViewRenderer::class, 'phtml'],
+        ]]]></code>
+    </MixedArrayOffset>
+    <MixedAssignment>
+      <code>$config</code>
+    </MixedAssignment>
+    <MixedInferredReturnType>
+      <code>Generator</code>
+      <code>iterable</code>
+    </MixedInferredReturnType>
+    <MixedReturnTypeCoercion>
+      <code><![CDATA[[
+            PlatesRenderer::class      => [PlatesRenderer::class, 'phtml'],
+            TwigRenderer::class        => [TwigRenderer::class, 'html.twig'],
+            LaminasViewRenderer::class => [LaminasViewRenderer::class, 'phtml'],
+        ]]]></code>
+      <code><![CDATA[array<string, array{0: string, 1: string}>]]></code>
+    </MixedReturnTypeCoercion>
+    <PossiblyFalseOperand>
+      <code><![CDATA[strrpos($renderer, '\\')]]></code>
+    </PossiblyFalseOperand>
+    <PropertyTypeCoercion>
+      <code>new $renderer()</code>
+    </PropertyTypeCoercion>
+    <UndefinedClass>
+      <code>LaminasViewRenderer</code>
+      <code>LaminasViewRenderer</code>
+      <code>PlatesRenderer</code>
+      <code>PlatesRenderer</code>
+      <code>PlatesRenderer|TwigRenderer|LaminasViewRenderer|null</code>
+      <code>PlatesRenderer|TwigRenderer|LaminasViewRenderer|null</code>
+      <code>PlatesRenderer|TwigRenderer|LaminasViewRenderer|null</code>
+      <code>TestHandler</code>
+      <code>TestHandler</code>
+      <code>TestHandler</code>
+      <code>TestHandler</code>
+      <code>TestHandler</code>
+      <code>TestHandler</code>
+      <code>TestHandler</code>
+      <code>TestHandler</code>
+      <code>TestHandler</code>
+      <code>TestHandler</code>
+      <code>TestHandler</code>
+      <code>TestHandler</code>
+      <code>TestHandler</code>
+      <code>TwigRenderer</code>
+      <code>TwigRenderer</code>
+    </UndefinedClass>
+    <UnresolvableInclude>
+      <code>include $configFile</code>
+      <code>require $sourceFile</code>
+      <code><![CDATA[require $this->projectRoot . '/src/Test/TestHandler.php']]></code>
+      <code><![CDATA[require $this->projectRoot . '/src/Test/TestHandler.php']]></code>
+      <code><![CDATA[require $this->projectRoot . '/src/Test/TestHandler.php']]></code>
+      <code><![CDATA[require $this->projectRoot . '/src/Test/TestHandler.php']]></code>
+      <code><![CDATA[require $this->projectRoot . '/src/Test/TestHandler.php']]></code>
+      <code><![CDATA[require $this->projectRoot . '/src/Test/TestHandler.php']]></code>
+      <code><![CDATA[require $this->projectRoot . '/src/Test/TestHandler.php']]></code>
+      <code><![CDATA[require $this->projectRoot . '/src/Test/src/TestHandler.php']]></code>
+      <code><![CDATA[require $this->projectRoot . '/src/Test/src/TestHandler.php']]></code>
+      <code><![CDATA[require $this->projectRoot . '/src/Test/src/TestHandler.php']]></code>
+      <code><![CDATA[require $this->projectRoot . '/src/Test/src/TestHandler.php']]></code>
+      <code><![CDATA[require $this->projectRoot . '/src/Test/src/TestHandler.php']]></code>
+      <code><![CDATA[require $this->projectRoot . '/src/Test/src/TestHandler.php']]></code>
+    </UnresolvableInclude>
+  </file>
+  <file src="test/Factory/ConfigInjectorTest.php">
+    <MixedArgument>
+      <code><![CDATA[$config['dependencies']['factories']]]></code>
+      <code>$factories</code>
+    </MixedArgument>
+    <MixedArrayAccess>
+      <code><![CDATA[$factories['App\Handler\HelloWorldHandler']]]></code>
+      <code>$factories[self::class]</code>
+    </MixedArrayAccess>
+    <MixedAssignment>
+      <code>$factories</code>
+    </MixedAssignment>
+    <UnresolvableInclude>
+      <code><![CDATA[include $this->projectRoot . '/' . ConfigInjector::CONFIG_FILE]]></code>
+      <code><![CDATA[include $this->projectRoot . '/' . ConfigInjector::CONFIG_FILE]]></code>
+    </UnresolvableInclude>
+  </file>
+  <file src="test/Factory/CreateTest.php">
+    <ArgumentTypeCoercion>
+      <code>$className</code>
+    </ArgumentTypeCoercion>
+    <InternalClass>
+      <code>new Create($generator)</code>
+      <code>new Create($generator)</code>
+      <code>new Create(new FactoryClassGenerator())</code>
+      <code>new FactoryClassGenerator()</code>
+      <code>new FactoryClassGenerator()</code>
+    </InternalClass>
+    <InternalMethod>
+      <code>createForClass</code>
+      <code>createForClass</code>
+      <code>createForClass</code>
+      <code>new Create($generator)</code>
+      <code>new Create($generator)</code>
+      <code>new Create(new FactoryClassGenerator())</code>
+    </InternalMethod>
+    <InvalidFunctionCall>
+      <code>$factory($container)</code>
+    </InvalidFunctionCall>
+    <InvalidStringClass>
+      <code>new $factoryName()</code>
+    </InvalidStringClass>
+    <MixedArgument>
+      <code>$className</code>
+      <code>$className</code>
+      <code>$className</code>
+    </MixedArgument>
+    <MixedAssignment>
+      <code>$className</code>
+      <code>$className</code>
+      <code>$className</code>
+      <code>$instance</code>
+    </MixedAssignment>
+    <UndefinedClass>
+      <code>TestClass</code>
+      <code>TestClass</code>
+      <code>TestClass</code>
+    </UndefinedClass>
+    <UnresolvableInclude>
+      <code>require $fileName</code>
+      <code><![CDATA[require $this->projectRoot . '/TestClass.php']]></code>
+      <code><![CDATA[require $this->projectRoot . '/TestClass.php']]></code>
+      <code><![CDATA[require $this->projectRoot . '/TestClass.php']]></code>
+    </UnresolvableInclude>
+  </file>
+  <file src="test/Factory/FactoryClassGeneratorTest.php">
+    <InternalClass>
+      <code>new FactoryClassGenerator()</code>
+    </InternalClass>
+    <InternalMethod>
+      <code>createFactory</code>
+      <code>createFactory</code>
+      <code>createFactory</code>
+      <code>createFactory</code>
+    </InternalMethod>
+  </file>
+  <file src="test/MigrateInteropMiddleware/ProjectSetupTrait.php">
+    <MixedArgument>
+      <code>$file</code>
+    </MixedArgument>
+    <MixedAssignment>
+      <code>$file</code>
+    </MixedAssignment>
+    <PossiblyInvalidArgument>
+      <code>$dir</code>
+    </PossiblyInvalidArgument>
+  </file>
+  <file src="test/MigrateMiddlewareToRequestHandler/ProjectSetupTrait.php">
+    <MixedArgument>
+      <code>$file</code>
+    </MixedArgument>
+    <MixedAssignment>
+      <code>$file</code>
+    </MixedAssignment>
+    <PossiblyInvalidArgument>
+      <code>$dir</code>
+    </PossiblyInvalidArgument>
+  </file>
+  <file src="test/Module/CommandCommonOptionsTest.php">
+    <InternalClass>
+      <code><![CDATA[CommandCommonOptions::getModulesPath($this->input)]]></code>
+      <code><![CDATA[CommandCommonOptions::getModulesPath($this->input, $config)]]></code>
+      <code><![CDATA[CommandCommonOptions::getModulesPath($this->input, $config)]]></code>
+    </InternalClass>
+    <InternalMethod>
+      <code><![CDATA[CommandCommonOptions::getModulesPath($this->input)]]></code>
+      <code><![CDATA[CommandCommonOptions::getModulesPath($this->input, $config)]]></code>
+      <code><![CDATA[CommandCommonOptions::getModulesPath($this->input, $config)]]></code>
+    </InternalMethod>
+  </file>
+</files>
