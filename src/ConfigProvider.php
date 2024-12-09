@@ -6,6 +6,8 @@ namespace SimpleUserManager\Entity;
 
 use Laminas\Db\Adapter\AdapterInterface;
 use Laminas\Db\Adapter\AdapterServiceFactory;
+use Mezzio\Application;
+use Mezzio\Container\ApplicationConfigInjectionDelegator;
 use SimpleUserManager\Handler\ForgotPasswordHandler;
 use SimpleUserManager\Handler\ForgotPasswordHandlerFactory;
 use SimpleUserManager\Handler\LoginHandler;
@@ -40,6 +42,7 @@ class ConfigProvider
     {
         return [
             'dependencies' => $this->getDependencies(),
+            'routes' => $this->getRouteConfig(),
         ];
     }
 
@@ -70,6 +73,67 @@ class ConfigProvider
                 Service\ForgotPassword\Adapter\AdapterInterface::class => Service\ResetPassword\Adapter\DefaultAdapterFactory::class,
                 Service\RegisterUser\Adapter\AdapterInterface::class   => Service\RegisterUser\Adapter\DefaultAdapterFactory::class,
                 Service\ResetPassword\Adapter\AdapterInterface::class  => Service\ResetPassword\Adapter\DefaultAdapterFactory::class,
+            ],
+            'delegators' => [
+                Application::class => [
+                    ApplicationConfigInjectionDelegator::class,
+                ]
+            ],
+        ];
+    }
+
+    public function getRouteConfig(): array
+    {
+        return [
+            [
+                'path'            => '/forgot-password',
+                'middleware'      => ForgotPasswordHandler::class,
+                'allowed_methods' => ['GET'],
+            ],
+            [
+                'path'            => '/forgot-password',
+                'middleware'      => ForgotPasswordMiddleware::class,
+                'allowed_methods' => ['POST'],
+            ],
+            [
+                'path'            => '/reset-password',
+                'middleware'      => ResetPasswordHandler::class,
+                'allowed_methods' => ['GET'],
+            ],
+            [
+                'path'            => '/reset-password',
+                'middleware'      => ResetPasswordMiddleware::class,
+                'allowed_methods' => ['POST'],
+            ],
+            [
+                'path'            => '/logout',
+                'middleware'      => LogoutMiddleware::class,
+                'allowed_methods' => ['GET'],
+            ],
+            [
+                'path'            => '/login',
+                'middleware'      => LoginHandler::class,
+                'allowed_methods' => ['GET'],
+            ],
+            [
+                'path'            => '/login',
+                'middleware'      => LoginMiddleware::class,
+                'allowed_methods' => ['POST'],
+            ],
+            [
+                'path'            => '/register',
+                'middleware'      => RegisterUserHandler::class,
+                'allowed_methods' => ['GET'],
+            ],
+            [
+                'path'            => '/register',
+                'middleware'      => RegisterUserMiddleware::class,
+                'allowed_methods' => ['POST'],
+            ],
+            [
+                'path'            => '/user/profile',
+                'middleware'      => UserProfileHandler::class,
+                'allowed_methods' => ['GET'],
             ],
         ];
     }
