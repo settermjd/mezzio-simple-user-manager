@@ -34,7 +34,8 @@
         ],
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
-        "test": "phpunit --colors=always"
+        "test": "phpunit --colors=always",
+        "markdownlint": "markdownlint README.md"
     },
     "config": {
         "allow-plugins": {
