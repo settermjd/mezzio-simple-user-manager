@@ -11,7 +11,7 @@ Rather, it's meant to be a simple user manager that provides the following funct
 - User profile; and 
 - Password reset 
 
-It's heavily inspired by [mezzio-auth-url][Mezzio Authentication] and [mezzio-auth-laminas-auth-url][mezzio-authentication-laminasauthentication].
+It's heavily inspired by [Mezzio Authentication][mezzio-auth-url] and [mezzio-authentication-laminasauthentication][mezzio-auth-laminas-auth-url].
 
 For more information, [check out the documentation](./docs).
 
