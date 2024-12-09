@@ -1,0 +1,11 @@
+<div>
+    <form method="post" enctype="application/x-www-form-urlencoded" name="login-form">
+        <label for="username">
+            <input type="text" id="username" name="username" placeholder="enter your username">
+        </label>
+        <label for="password">
+            <input type="password" id="password" name="password" placeholder="enter your password">
+        </label>
+        <input type="submit" name="submit" value="Login">
+    </form>
+</div>
