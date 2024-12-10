@@ -23,7 +23,16 @@ final readonly class DbAdapter implements AdapterInterface
         private DbAdapterInterface $adapter,
         private string $tableName = "password_resets",
         private string $identityColumn = "user_identity",
-    ) {
+    ) {}
+
+    public function getTableName(): string
+    {
+        return $this->tableName;
+    }
+
+    public function getIdentityColumn(): string
+    {
+        return $this->identityColumn;
     }
 
     /**

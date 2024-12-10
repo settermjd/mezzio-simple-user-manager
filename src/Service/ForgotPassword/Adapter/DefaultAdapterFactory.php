@@ -11,6 +11,11 @@ class DefaultAdapterFactory
 {
     public function __invoke(ContainerInterface $container): DbAdapter
     {
-        return new DbAdapter($container->get(AdapterInterface::class));
+        $config = $container->get("config");
+        return new DbAdapter(
+            adapter: $container->get(AdapterInterface::class),
+            tableName: $config["forgot_password"]["adapter"]["db_adapter"]["table"],
+            identityColumn: $config["forgot_password"]["adapter"]["db_adapter"]["identity_column"],
+        );
     }
 }
