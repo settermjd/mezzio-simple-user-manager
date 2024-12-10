@@ -51,9 +51,7 @@ final readonly class ForgotPasswordMiddleware implements MiddlewareInterface
             return new RedirectResponse(self::ROUTE_NAME_FORGOT_PASSWORD);
         }
 
-        $user = $request->getAttribute(UserInterface::class);
-
-        if ($this->adapter->forgotPassword($user->getIdentity())) {
+        if ($this->adapter->forgotPassword($this->inputFilter->getValue("email"))) {
             $this->eventManager->trigger(
                 self::EVENT_FORGOT_PASSWORD_SUCCESS,
                 new DefaultUser(identity: "", details: [

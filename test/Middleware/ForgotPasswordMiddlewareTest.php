@@ -36,12 +36,6 @@ class ForgotPasswordMiddlewareTest extends TestCase
             ->with($userIdentity)
             ->willReturn(true);
 
-        $user = $this->createMock(UserInterface::class);
-        $user
-            ->expects($this->once())
-            ->method("getIdentity")
-            ->willReturn($userIdentity);
-
         /** @var EventManagerInterface&MockObject $eventManager */
         $eventManager = $this->createMock(EventManagerInterface::class);
         $eventManager
@@ -59,11 +53,6 @@ class ForgotPasswordMiddlewareTest extends TestCase
 
         /** @var ServerRequestInterface&MockObject $request */
         $request = $this->createMock(ServerRequestInterface::class);
-        $request
-            ->expects($this->once())
-            ->method("getAttribute")
-            ->with(UserInterface::class)
-            ->willReturn($user);
         $request
             ->expects($this->once())
             ->method("getParsedBody")
@@ -88,12 +77,6 @@ class ForgotPasswordMiddlewareTest extends TestCase
             ->with($userIdentity)
             ->willReturn(false);
 
-        $user = $this->createMock(UserInterface::class);
-        $user
-            ->expects($this->once())
-            ->method("getIdentity")
-            ->willReturn($userIdentity);
-
         /** @var EventManagerInterface&MockObject $eventManager */
         $eventManager = $this->createMock(EventManagerInterface::class);
         $eventManager
@@ -111,11 +94,6 @@ class ForgotPasswordMiddlewareTest extends TestCase
 
         /** @var ServerRequestInterface&MockObject $request */
         $request = $this->createMock(ServerRequestInterface::class);
-        $request
-            ->expects($this->once())
-            ->method("getAttribute")
-            ->with(UserInterface::class)
-            ->willReturn($user);
         $request
             ->expects($this->once())
             ->method("getParsedBody")
