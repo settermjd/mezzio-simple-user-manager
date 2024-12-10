@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace SimpleUserManager\Middleware;
 
 use Laminas\Diactoros\Response\RedirectResponse;
+use Laminas\EventManager\EventManagerInterface;
 use Laminas\InputFilter\InputFilterInterface;
+use Mezzio\Authentication\DefaultUser;
 use Mezzio\Authentication\UserInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -28,16 +30,19 @@ use SimpleUserManager\Service\ForgotPassword\Adapter\AdapterInterface;
  */
 final readonly class ForgotPasswordMiddleware implements MiddlewareInterface
 {
-    public const string ROUTE_NAME_FORGOT_PASSWORD = "/forgot-password";
+    public const string ROUTE_NAME_FORGOT_PASSWORD    = "/forgot-password";
+    public const string EVENT_FORGOT_PASSWORD_SUCCESS = "forgot-message-success";
+    public const string EVENT_FORGOT_PASSWORD_FAIL = "forgot-message-fail";
 
     public function __construct(
         private AdapterInterface $adapter,
-        private InputFilterInterface $inputFilter
-    ) {
-    }
+        private InputFilterInterface $inputFilter,
+        private EventManagerInterface $eventManager
+    ) {}
 
     /**
-     * process clears the stored authentication identity and then continues on with the request pipeline
+     * process clears the stored authentication identity and then continues on
+     * with the request pipeline
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -47,7 +52,22 @@ final readonly class ForgotPasswordMiddleware implements MiddlewareInterface
         }
 
         $user = $request->getAttribute(UserInterface::class);
-        $this->adapter->forgotPassword($user->getIdentity());
+
+        if ($this->adapter->forgotPassword($user->getIdentity())) {
+            $this->eventManager->trigger(
+                self::EVENT_FORGOT_PASSWORD_SUCCESS,
+                new DefaultUser(identity: "", details: [
+                    "email" => $this->inputFilter->getValue("email"),
+                ])
+            );
+        } else {
+            $this->eventManager->trigger(
+                self::EVENT_FORGOT_PASSWORD_FAIL,
+                new DefaultUser(identity: "", details: [
+                    "email" => $this->inputFilter->getValue("email"),
+                ])
+            );
+        }
 
         return $handler->handle($request);
     }

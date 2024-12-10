@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleUserManagerTest\Handler;
 
+use Laminas\EventManager\EventManagerInterface;
 use Laminas\InputFilter\InputFilterInterface;
 use PHPUnit\Framework\TestCase;
 use SimpleUserManager\Middleware\ForgotPasswordMiddleware;
@@ -25,6 +26,11 @@ class ForgotPasswordMiddlewareFactoryTest extends TestCase
             "ForgotPasswordInputFilter",
             /** @param InputFilterInterface&MockObject */
             $this->createMock(InputFilterInterface::class)
+        );
+        $container->setService(
+            EventManagerInterface::class,
+            /** @param EventManagerInterface&MockObject */
+            $this->createMock(EventManagerInterface::class)
         );
 
         $factory = new ForgotPasswordMiddlewareFactory();
