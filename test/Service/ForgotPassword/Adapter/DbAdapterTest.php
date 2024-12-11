@@ -4,31 +4,45 @@ declare(strict_types=1);
 
 namespace SimpleUserManagerTest\Service\ForgotPassword\Adapter;
 
-use DateInterval;
-use DateTime;
+use JetBrains\PhpStorm\NoReturn;
 use Laminas\Db\Adapter\Adapter;
-use PDO;
+use Phinx\Console\PhinxApplication;
+use Phinx\Wrapper\TextWrapper;
 use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
 use SimpleUserManager\Service\ForgotPassword\Adapter\DbAdapter;
-use tebazil\dbseeder\Seeder;
-
-use function sprintf;
+use Symfony\Component\Console\Input\StringInput;
+use Symfony\Component\Console\Output\NullOutput;
 
 class DbAdapterTest extends TestCase
 {
     private Adapter $adapter;
 
-    public function setUp(): void
+    private static TextWrapper $phinxWrapper;
+
+    private string $databaseFile = __DIR__ . "/../../../database.sqlite3";
+
+    private function setUpDatabase(): void
     {
-        $databaseFile = __DIR__ . "/../../../database.sqlite";
+        $app = new PhinxApplication();
+        $app->setAutoExit(false);
+        $app->run(new StringInput(''), new NullOutput());
+
+        self::$phinxWrapper = new TextWrapper($app);
+        self::$phinxWrapper->getMigrate("testing");
+        self::$phinxWrapper->getSeed(
+            seed: [
+                "UserSeeder",
+                "PasswordResetsSeeder",
+            ]
+        );
 
         $this->adapter = new Adapter([
             "driver"   => "Pdo_Sqlite",
-            "database" => $databaseFile,
+            "database" => $this->databaseFile,
         ]);
 
-        $pdo    = new PDO(sprintf('sqlite:%s', $databaseFile));
+        /*$pdo    = new PDO(sprintf('sqlite:%s', $databaseFile));
         $seeder = new Seeder($pdo);
         $seeder
             ->table('user')
@@ -63,16 +77,26 @@ class DbAdapterTest extends TestCase
             ->rowQuantity(1);
 
         $seeder->refill();
+        */
+    }
+
+    public function tearDownDatabase(): void
+    {
+        self::$phinxWrapper->getRollback("testing");
     }
 
     #[TestWith(["user@example.com"])]
     #[TestWith(["matthew@example.org"])]
     public function testCanSuccessfullyForgetPassword(string $userIdentity): void
     {
+        $this->setUpDatabase();
+
         $middlewareAdapter = new DbAdapter(
             adapter: $this->adapter,
         );
 
         $this->assertTrue($middlewareAdapter->forgotPassword($userIdentity));
+
+        $this->tearDownDatabase();
     }
 }
