@@ -16,15 +16,20 @@ class PasswordResetsSeeder extends AbstractSeed
      */
     public function run(): void
     {
-        $today = new DateTime();
+        $sixDays = (new DateTime())
+            ->sub(new DateInterval("P6D"))
+            ->format("Y-m-d");
+        $oneDay = (new DateTime())
+            ->sub(new DateInterval("P1D"))
+            ->format("Y-m-d");
         $data  = [
             [
                 'user_identity' => 'matthew@example.org',
-                'created_at'    => $today->sub(new DateInterval("P6D"))->format("Y-m-d"),
+                'created_at'    => $sixDays,
             ],
             [
                 'user_identity' => 'matthew@example.com',
-                'created_at'    => $today->sub(new DateInterval("P1D"))->format("Y-m-d"),
+                'created_at'    => $oneDay,
             ],
         ];
 
