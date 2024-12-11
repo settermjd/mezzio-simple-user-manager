@@ -61,7 +61,7 @@ final readonly class DbAdapter implements AdapterInterface
             )
             ->where([
                 'pr.user_identity' => $identity,
-                new Expression("(date('now', 'localtime') <= date(pr.created_on, '+5 days'))"),
+                new Expression("(date('now', 'localtime') <= date(pr.created_at, '+5 days'))"),
             ]);
 
         $results = $this->adapter->query(
