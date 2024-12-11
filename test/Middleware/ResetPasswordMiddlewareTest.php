@@ -12,6 +12,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use SimpleUserManager\Middleware\ResetPasswordMiddleware;
 use SimpleUserManager\Service\ResetPassword\Adapter\AdapterInterface;
+use SimpleUserManager\Service\ResetPassword\Result;
 use SimpleUserManager\Validator\ResetPasswordValidator;
 
 class ResetPasswordMiddlewareTest extends TestCase
@@ -33,7 +34,7 @@ class ResetPasswordMiddlewareTest extends TestCase
             ->expects($this->once())
             ->method('resetPassword')
             ->with($email, $password)
-            ->willReturn(true);
+            ->willReturn(new Result(Result::SUCCESS));
 
         /** @var EventManagerInterface&MockObject $eventManager */
         $eventManager = $this->createMock(EventManagerInterface::class);

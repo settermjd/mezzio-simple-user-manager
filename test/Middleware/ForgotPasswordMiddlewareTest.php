@@ -7,7 +7,6 @@ namespace SimpleUserManagerTest\Middleware;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\EventManager\EventManagerInterface;
 use Mezzio\Authentication\DefaultUser;
-use Mezzio\Authentication\UserInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
@@ -15,6 +14,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use SimpleUserManager\Middleware\ForgotPasswordMiddleware;
 use SimpleUserManager\Service\ForgotPassword\Adapter\AdapterInterface;
+use SimpleUserManager\Service\ForgotPassword\Result;
 use SimpleUserManager\Validator\ForgotPasswordValidator;
 
 class ForgotPasswordMiddlewareTest extends TestCase
@@ -34,7 +34,7 @@ class ForgotPasswordMiddlewareTest extends TestCase
             ->expects($this->once())
             ->method('forgotPassword')
             ->with($userIdentity)
-            ->willReturn(true);
+            ->willReturn(new Result(Result::SUCCESS));
 
         /** @var EventManagerInterface&MockObject $eventManager */
         $eventManager = $this->createMock(EventManagerInterface::class);
@@ -75,7 +75,7 @@ class ForgotPasswordMiddlewareTest extends TestCase
             ->expects($this->once())
             ->method('forgotPassword')
             ->with($userIdentity)
-            ->willReturn(false);
+            ->willReturn(new Result(Result::FAILURE_RECORD_EXISTS_FOR_PROVIDED_IDENTITY));
 
         /** @var EventManagerInterface&MockObject $eventManager */
         $eventManager = $this->createMock(EventManagerInterface::class);

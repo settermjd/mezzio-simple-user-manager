@@ -14,6 +14,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use SimpleUserManager\Service\ForgotPassword\Adapter\AdapterInterface;
+use SimpleUserManager\Service\ForgotPassword\Result;
 
 /**
  * This class ends a user's session
@@ -51,21 +52,20 @@ final readonly class ForgotPasswordMiddleware implements MiddlewareInterface
             return new RedirectResponse(self::ROUTE_NAME_FORGOT_PASSWORD);
         }
 
-        if ($this->adapter->forgotPassword($this->inputFilter->getValue("email"))) {
-            $this->eventManager->trigger(
+        $result = $this->adapter->forgotPassword($this->inputFilter->getValue("email"));
+        $result->getCode() === Result::SUCCESS
+            ? $this->eventManager->trigger(
                 self::EVENT_FORGOT_PASSWORD_SUCCESS,
                 new DefaultUser(identity: "", details: [
                     "email" => $this->inputFilter->getValue("email"),
                 ])
-            );
-        } else {
-            $this->eventManager->trigger(
+            )
+            : $this->eventManager->trigger(
                 self::EVENT_FORGOT_PASSWORD_FAIL,
                 new DefaultUser(identity: "", details: [
                     "email" => $this->inputFilter->getValue("email"),
                 ])
             );
-        }
 
         return $handler->handle($request);
     }

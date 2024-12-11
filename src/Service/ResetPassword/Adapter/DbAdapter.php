@@ -13,6 +13,7 @@ use Laminas\Db\TableGateway\TableGateway;
 use Laminas\Hydrator\ReflectionHydrator;
 use SimpleUserManager\Entity\ResetPassword\ResetActive;
 use SimpleUserManager\Exception\PasswordResetNotActiveForUserException;
+use SimpleUserManager\Service\ResetPassword\Result;
 
 /**
  * This class uses laminas-db to insert a record in a table in the database
@@ -31,8 +32,7 @@ final readonly class DbAdapter implements AdapterInterface
         private string $tableName = "user",
         private string $passwordColumn = "password",
         private string $identityColumn = "email"
-    ) {
-    }
+    ) {}
 
     /**
      * This function registers a hash in the identity column of the table in the
@@ -41,7 +41,7 @@ final readonly class DbAdapter implements AdapterInterface
      * @todo Handle exceptions
      * @todo Handle missing identity value
      */
-    public function resetPassword(string $identity, string $password): bool
+    public function resetPassword(string $identity, string $password): Result
     {
         // Check if the user exists before attempting to update them and handle
         // the case when they don't
@@ -73,12 +73,17 @@ final readonly class DbAdapter implements AdapterInterface
         /** @var ResetActive $result */
         $result = $results->current();
         if (! $result->isResetActive()) {
-            throw new PasswordResetNotActiveForUserException();
+            return new Result(
+                Result::FAILURE_IDENTITY_NOT_FOUND,
+                [
+                    "The user does not have a password reset in effect"
+                ]
+            );
         }
 
         // Update the user's password
         $resetPasswordTable = new TableGateway($this->tableName, $this->adapter);
-        $affectedRows       = $resetPasswordTable
+        $resetPasswordTable
             ->update(
                 [
                     $this->passwordColumn => $password,
@@ -88,6 +93,6 @@ final readonly class DbAdapter implements AdapterInterface
                 ]
             );
 
-        return $affectedRows === 1;
+        return new Result(code: Result::SUCCESS);
     }
 }

@@ -9,9 +9,8 @@ use Mezzio\Authentication\DefaultUser;
 use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
 use SimpleUserManager\Service\RegisterUser\Adapter\DbAdapter;
+use SimpleUserManager\Service\RegisterUser\Result;
 use SimpleUserManagerTest\Service\DbTestTrait;
-
-use function sprintf;
 
 class DbAdapterTest extends TestCase
 {
@@ -26,7 +25,7 @@ class DbAdapterTest extends TestCase
             'username'   => 'username',
             'password'   => 'password',
         ],
-        false,
+        Result::FAILURE,
     ])]
     #[TestWith([
         [
@@ -37,30 +36,26 @@ class DbAdapterTest extends TestCase
             'username'   => 'username',
             'password'   => 'password',
         ],
-        true,
+        Result::SUCCESS,
     ])]
-    public function testCanRegisterUserAndHandleExceptions(array $details, bool $status): void
+    public function testCanRegisterUserAndHandleExceptions(array $details, int $code): void
     {
-        if (! $status) {
-            $this->expectException(InvalidQueryException::class);
-        }
-
-        $middlewareAdapter = new DbAdapter(adapter: $this->getDbAdapter(),);
-        $this->assertSame(
-            $status,
-            $middlewareAdapter->registerUser(
-                new DefaultUser(
-                    identity: "",
-                    details: [
-                        "first_name" => $details["first_name"],
-                        "last_name"  => $details["last_name"],
-                        "email"      => $details["email"],
-                        "phone"      => $details["phone"],
-                        "username"   => $details["username"],
-                        "password"   => $details["password"],
-                    ]
-                )
+        $middlewareAdapter = new DbAdapter(adapter: $this->getDbAdapter());
+        $result = $middlewareAdapter->registerUser(
+            new DefaultUser(
+                identity: "",
+                details: [
+                    "first_name" => $details["first_name"],
+                    "last_name"  => $details["last_name"],
+                    "email"      => $details["email"],
+                    "phone"      => $details["phone"],
+                    "username"   => $details["username"],
+                    "password"   => $details["password"],
+                ]
             )
         );
+
+        $this->assertInstanceOf(Result::class, $result);
+        $this->assertSame($code, $result->getCode());
     }
 }

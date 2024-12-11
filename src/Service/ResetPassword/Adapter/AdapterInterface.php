@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace SimpleUserManager\Service\ResetPassword\Adapter;
 
+use SimpleUserManager\Service\ResetPassword\Result;
+
 interface AdapterInterface
 {
     /**
@@ -13,5 +15,5 @@ interface AdapterInterface
      * SHA512, etc, is handled by the AdapterInterface implementation, not at
      * this level of abstraction.
      */
-    public function resetPassword(string $identity, string $password): bool;
+    public function resetPassword(string $identity, string $password): Result;
 }

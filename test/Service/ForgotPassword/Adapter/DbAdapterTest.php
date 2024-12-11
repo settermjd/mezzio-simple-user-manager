@@ -7,22 +7,26 @@ namespace SimpleUserManagerTest\Service\ForgotPassword\Adapter;
 use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
 use SimpleUserManager\Service\ForgotPassword\Adapter\DbAdapter;
+use SimpleUserManager\Service\ForgotPassword\Result;
 use SimpleUserManagerTest\Service\DbTestTrait;
 
 class DbAdapterTest extends TestCase
 {
     use DbTestTrait;
 
-    #[TestWith(["user@example.com"])]
-    #[TestWith(["matthew@example.org"])]
-    public function testCanSuccessfullyForgetPassword(string $userIdentity): void
+    #[TestWith(["user@example.com", Result::SUCCESS])]
+    #[TestWith(["matthew@example.org", Result::FAILURE_RECORD_EXISTS_FOR_PROVIDED_IDENTITY])]
+    public function testCanSuccessfullyForgetPassword(string $userIdentity, int $code): void
     {
         $this->setUpDatabase();
 
         $middlewareAdapter = new DbAdapter(adapter: $this->getDbAdapter());
 
-        $this->assertTrue($middlewareAdapter->forgotPassword($userIdentity));
+        /** @var Result $result */
+        $result = $middlewareAdapter->forgotPassword($userIdentity);
+        $this->assertInstanceOf(Result::class, $result);
+        $this->assertSame($code, $result->getCode());
 
-        $this->tearDownDatabase();
+        //$this->tearDownDatabase();
     }
 }

@@ -14,6 +14,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use SimpleUserManager\Middleware\RegisterUserMiddleware;
 use SimpleUserManager\Service\RegisterUser\Adapter\AdapterInterface;
+use SimpleUserManager\Service\RegisterUser\Result;
 use SimpleUserManager\Validator\RegisterUserValidator;
 
 class RegisterUserMiddlewareTest extends TestCase
@@ -41,7 +42,7 @@ class RegisterUserMiddlewareTest extends TestCase
             ->expects($this->once())
             ->method('registerUser')
             ->with($user)
-            ->willReturn(true);
+            ->willReturn(new Result(code: Result::SUCCESS));
 
         /** @var EventManagerInterface&MockObject $eventManager */
         $eventManager = $this->createMock(EventManagerInterface::class);

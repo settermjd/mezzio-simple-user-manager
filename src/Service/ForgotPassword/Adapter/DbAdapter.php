@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace SimpleUserManager\Service\ForgotPassword\Adapter;
 
 use Laminas\Db\Adapter\AdapterInterface as DbAdapterInterface;
+use Laminas\Db\Adapter\Exception\InvalidQueryException;
 use Laminas\Db\TableGateway\TableGateway;
+use SimpleUserManager\Service\ForgotPassword\Result;
 
 /**
  * This class uses laminas-db to insert a record in a table in the database
@@ -41,15 +43,24 @@ final readonly class DbAdapter implements AdapterInterface
      *
      * @todo Handle exceptions
      * @todo Handle existing record
-     * @todo Handle missing reset password hash
+     * @todo Handle existing reset password entry
      */
-    public function forgotPassword(string $userIdentity): bool
+    public function forgotPassword(string $userIdentity): Result
     {
         $userTable    = new TableGateway($this->tableName, $this->adapter);
-        $affectedRows = $userTable->insert([
-            $this->identityColumn => $userIdentity,
-        ]);
+        try {
+            $userTable->insert([
+                $this->identityColumn => $userIdentity,
+            ]);
+        } catch (InvalidQueryException $e) {
+            return new Result(
+                code: Result::FAILURE_RECORD_EXISTS_FOR_PROVIDED_IDENTITY,
+                messages: [
+                    $e->getMessage(),
+                ]
+            );
+        }
 
-        return $affectedRows === 1;
+        return new Result(Result::SUCCESS);
     }
 }

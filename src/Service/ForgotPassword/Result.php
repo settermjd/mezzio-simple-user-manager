@@ -4,55 +4,44 @@ declare(strict_types=1);
 
 namespace SimpleUserManager\Service\ForgotPassword;
 
-class Result
+final class Result
 {
     /**
      * General Failure
      */
-    public const FAILURE = 0;
+    public const int FAILURE = 0;
 
     /**
-     * Failure due to identity not being found.
+     * Failure due to record already existing for the identity provided.
      */
-    public const FAILURE_IDENTITY_NOT_FOUND = -1;
-
-    /**
-     * Failure due to identity being ambiguous.
-     */
-    public const FAILURE_IDENTITY_AMBIGUOUS = -2;
+    public const int FAILURE_RECORD_EXISTS_FOR_PROVIDED_IDENTITY = -1;
 
     /**
      * Failure due to uncategorized reasons.
      */
-    public const FAILURE_UNCATEGORIZED = -4;
+    public const int FAILURE_UNCATEGORIZED = -4;
 
     /**
      * Authentication success.
      */
-    public const SUCCESS = 1;
+    public const int SUCCESS = 1;
 
     /**
      * Authentication result code
-     *
-     * @var int
      */
-    protected $code;
+    protected int $code;
 
     /**
      * An array of string reasons why the authentication attempt was unsuccessful
      *
      * If authentication was successful, this should be an empty array.
-     *
-     * @var array
      */
-    protected $messages;
+    protected array $messages;
 
     /**
      * Sets the result code, identity, and failure messages
-     *
-     * @param  int     $code
      */
-    public function __construct($code, array $messages = [])
+    public function __construct(int $code, array $messages = [])
     {
         $this->code     = (int) $code;
         $this->messages = $messages;
@@ -61,19 +50,16 @@ class Result
     /**
      * Returns whether the result represents a successful authentication attempt
      *
-     * @return bool
      */
-    public function isValid()
+    public function isValid(): bool
     {
         return $this->code > 0;
     }
 
     /**
      * getCode() - Get the result code for this authentication attempt
-     *
-     * @return int
      */
-    public function getCode()
+    public function getCode(): int
     {
         return $this->code;
     }
@@ -82,10 +68,8 @@ class Result
      * Returns an array of string reasons why the authentication attempt was unsuccessful
      *
      * If authentication was successful, this method returns an empty array.
-     *
-     * @return array
      */
-    public function getMessages()
+    public function getMessages(): array
     {
         return $this->messages;
     }
