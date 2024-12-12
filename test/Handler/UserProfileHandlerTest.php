@@ -26,7 +26,7 @@ class UserProfileHandlerTest extends TestCase
         $this->templateRenderer
             ->expects($this->once())
             ->method('render')
-            ->with('app::user-profile', $this->isType('array'))
+            ->with('sum-app::user-profile', $this->isType('array'))
             ->willReturn('');
 
         $handler = new UserProfileHandler($this->templateRenderer);

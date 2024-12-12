@@ -26,7 +26,7 @@ class ResetPasswordHandlerTest extends TestCase
         $this->templateRenderer
             ->expects($this->once())
             ->method('render')
-            ->with('app::reset-password', $this->isType('array'))
+            ->with('sum-app::reset-password', $this->isType('array'))
             ->willReturn('');
 
         $handler = new ResetPasswordHandler($this->templateRenderer);

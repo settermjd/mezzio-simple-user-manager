@@ -26,7 +26,7 @@ class RegisterUserHandlerTest extends TestCase
         $this->templateRenderer
             ->expects($this->once())
             ->method('render')
-            ->with('app::register-user', $this->isType('array'))
+            ->with('sum-app::register-user', $this->isType('array'))
             ->willReturn('');
 
         $handler = new RegisterUserHandler($this->templateRenderer);

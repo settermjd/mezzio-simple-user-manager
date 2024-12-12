@@ -26,7 +26,7 @@ class LoginHandlerTest extends TestCase
         $this->templateRenderer
             ->expects($this->once())
             ->method('render')
-            ->with('app::login', $this->isType('array'))
+            ->with('sum-app::login', $this->isType('array'))
             ->willReturn('');
 
         $handler = new LoginHandler($this->templateRenderer);

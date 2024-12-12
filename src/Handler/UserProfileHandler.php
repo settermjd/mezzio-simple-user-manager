@@ -23,7 +23,7 @@ final readonly class UserProfileHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         return new HtmlResponse($this->renderer->render(
-            'app::user-profile',
+            'sum-app::user-profile',
             []
         ));
     }

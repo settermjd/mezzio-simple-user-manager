@@ -36,7 +36,7 @@ final readonly class ForgotPasswordHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         return new HtmlResponse($this->renderer->render(
-            "app::forgot-password",
+            "sum-app::forgot-password",
             []
         ));
     }

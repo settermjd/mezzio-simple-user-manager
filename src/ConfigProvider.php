@@ -44,6 +44,20 @@ class ConfigProvider
         return [
             'dependencies' => $this->getDependencies(),
             'routes'       => $this->getRouteConfig(),
+            'templates'    => $this->getTemplates(),
+        ];
+    }
+
+    /**
+     * Returns the templates configuration
+     */
+    public function getTemplates(): array
+    {
+        return [
+            'paths' => [
+                'sum-app'    => ['templates/app'],
+                'sum-layout' => ['templates/layout'],
+            ],
         ];
     }
 

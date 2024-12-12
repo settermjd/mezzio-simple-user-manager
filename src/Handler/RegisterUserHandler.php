@@ -34,7 +34,7 @@ final readonly class RegisterUserHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         return new HtmlResponse($this->renderer->render(
-            "app::register-user",
+            "sum-app::register-user",
             []
         ));
     }

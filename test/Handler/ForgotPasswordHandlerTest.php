@@ -26,7 +26,7 @@ class ForgotPasswordHandlerTest extends TestCase
         $this->templateRenderer
             ->expects($this->once())
             ->method('render')
-            ->with('app::forgot-password', $this->isType('array'))
+            ->with('sum-app::forgot-password', $this->isType('array'))
             ->willReturn('');
 
         $handler = new ForgotPasswordHandler($this->templateRenderer);

@@ -25,9 +25,9 @@ final readonly class LoginHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         return new HtmlResponse($this->renderer->render(
-            "app::login",
+            "sum-app::login",
             [
-                "layout" => "layout::minimal-default",
+                "sum-layout" => "layout::minimal-default",
             ]
         ));
     }

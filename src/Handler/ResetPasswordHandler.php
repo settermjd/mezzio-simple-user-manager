@@ -22,6 +22,6 @@ final readonly class ResetPasswordHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        return new HtmlResponse($this->renderer->render("app::reset-password"));
+        return new HtmlResponse($this->renderer->render("sum-app::reset-password"));
     }
 }
