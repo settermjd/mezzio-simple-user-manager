@@ -11,6 +11,10 @@ class DefaultAdapterFactory
 {
     public function __invoke(ContainerInterface $container): DbAdapter
     {
-        return new DbAdapter($container->get(AdapterInterface::class));
+        $config = $container->get("config");
+
+        $tableName = $config["register_user"]["adapter"]["db_adapter"]["table"] ?? DbAdapter::DEFAULT_TABLE_NAME;
+
+        return new DbAdapter($container->get(AdapterInterface::class), $tableName);
     }
 }

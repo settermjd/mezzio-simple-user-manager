@@ -12,13 +12,15 @@ use SimpleUserManager\Service\RegisterUser\Result;
 
 final readonly class DbAdapter implements AdapterInterface
 {
+    public const string DEFAULT_TABLE_NAME = "user";
+
     /**
      * @param string $tableName  This identifies the table to insert a record into to
      *                           identify that a user is resetting their password
      */
     public function __construct(
         private DbAdapterInterface $adapter,
-        private string $tableName = "user"
+        private string $tableName = self::DEFAULT_TABLE_NAME
     ) {}
 
     /**
@@ -36,5 +38,10 @@ final readonly class DbAdapter implements AdapterInterface
         }
 
         return new Result(Result::SUCCESS);
+    }
+
+    public function getTableName(): string
+    {
+        return $this->tableName;
     }
 }
