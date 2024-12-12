@@ -8,7 +8,6 @@ use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\EventManager\EventManagerInterface;
 use Laminas\InputFilter\InputFilterInterface;
 use Mezzio\Authentication\DefaultUser;
-use Mezzio\Authentication\UserInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -33,13 +32,14 @@ final readonly class ForgotPasswordMiddleware implements MiddlewareInterface
 {
     public const string ROUTE_NAME_FORGOT_PASSWORD    = "/forgot-password";
     public const string EVENT_FORGOT_PASSWORD_SUCCESS = "forgot-message-success";
-    public const string EVENT_FORGOT_PASSWORD_FAIL = "forgot-message-fail";
+    public const string EVENT_FORGOT_PASSWORD_FAIL    = "forgot-message-fail";
 
     public function __construct(
         private AdapterInterface $adapter,
         private InputFilterInterface $inputFilter,
         private EventManagerInterface $eventManager
-    ) {}
+    ) {
+    }
 
     /**
      * process clears the stored authentication identity and then continues on

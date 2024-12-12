@@ -29,12 +29,12 @@ class DefaultAdapterFactoryTest extends TestCase
                     "reset_password" => [
                         "adapter" => [
                             "db_adapter" => [
-                                "table" => "user",
+                                "table"           => "user",
                                 "password_column" => "password",
                                 "identity_column" => "email",
                             ],
                         ],
-                    ]
+                    ],
                 ],
                 $dbAdapter,
             );

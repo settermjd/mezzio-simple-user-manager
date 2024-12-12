@@ -20,7 +20,7 @@ use SimpleUserManager\Service\ResetPassword\Result;
  */
 final readonly class DbAdapter implements AdapterInterface
 {
-    public const string DEFAULT_TABLE_NAME = "user";
+    public const string DEFAULT_TABLE_NAME      = "user";
     public const string DEFAULT_PASSWORD_COLUMN = "password";
     public const string DEFAULT_IDENTITY_COLUMN = "email";
 
@@ -36,7 +36,8 @@ final readonly class DbAdapter implements AdapterInterface
         private string $tableName = self::DEFAULT_TABLE_NAME,
         private string $passwordColumn = self::DEFAULT_PASSWORD_COLUMN,
         private string $identityColumn = self::DEFAULT_IDENTITY_COLUMN
-    ) {}
+    ) {
+    }
 
     public function getTableName(): string
     {
@@ -95,7 +96,7 @@ final readonly class DbAdapter implements AdapterInterface
             return new Result(
                 Result::FAILURE_IDENTITY_NOT_FOUND,
                 [
-                    "The user does not have a password reset in effect"
+                    "The user does not have a password reset in effect",
                 ]
             );
         }

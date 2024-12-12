@@ -23,7 +23,7 @@ class DbAdapterTest extends TestCase
         int $code
     ): void {
         $middlewareAdapter = new DbAdapter(adapter: $this->getDbAdapter());
-        $result = $middlewareAdapter->resetPassword($userIdentity, $password);
+        $result            = $middlewareAdapter->resetPassword($userIdentity, $password);
 
         $this->assertInstanceOf(Result::class, $result);
         $this->assertSame($code, $result->getCode());

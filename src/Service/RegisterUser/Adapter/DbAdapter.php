@@ -21,7 +21,8 @@ final readonly class DbAdapter implements AdapterInterface
     public function __construct(
         private DbAdapterInterface $adapter,
         private string $tableName = self::DEFAULT_TABLE_NAME
-    ) {}
+    ) {
+    }
 
     /**
      * This function registers a new user in the underlying database

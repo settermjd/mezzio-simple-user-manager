@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimpleUserManagerTest\Service\RegisterUser\Adapter;
 
 use Laminas\Db\Adapter\AdapterInterface;
@@ -27,9 +29,9 @@ class DefaultAdapterFactoryTest extends TestCase
                         "adapter" => [
                             "db_adapter" => [
                                 "table" => "user",
-                            ]
+                            ],
                         ],
-                    ]
+                    ],
                 ],
                 $dbAdapter,
             );

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SimpleUserManagerTest\Service\RegisterUser\Adapter;
 
-use Laminas\Db\Adapter\Exception\InvalidQueryException;
 use Mezzio\Authentication\DefaultUser;
 use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
@@ -41,7 +40,7 @@ class DbAdapterTest extends TestCase
     public function testCanRegisterUserAndHandleExceptions(array $details, int $code): void
     {
         $middlewareAdapter = new DbAdapter(adapter: $this->getDbAdapter());
-        $result = $middlewareAdapter->registerUser(
+        $result            = $middlewareAdapter->registerUser(
             new DefaultUser(
                 identity: "",
                 details: [

@@ -25,7 +25,8 @@ final readonly class DbAdapter implements AdapterInterface
         private DbAdapterInterface $adapter,
         private string $tableName = "password_resets",
         private string $identityColumn = "user_identity",
-    ) {}
+    ) {
+    }
 
     public function getTableName(): string
     {
@@ -47,7 +48,7 @@ final readonly class DbAdapter implements AdapterInterface
      */
     public function forgotPassword(string $userIdentity): Result
     {
-        $userTable    = new TableGateway($this->tableName, $this->adapter);
+        $userTable = new TableGateway($this->tableName, $this->adapter);
         try {
             $userTable->insert([
                 $this->identityColumn => $userIdentity,

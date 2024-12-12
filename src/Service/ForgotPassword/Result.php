@@ -49,7 +49,6 @@ final class Result
 
     /**
      * Returns whether the result represents a successful authentication attempt
-     *
      */
     public function isValid(): bool
     {

@@ -42,7 +42,7 @@ class ConfigProvider
     {
         return [
             'dependencies' => $this->getDependencies(),
-            'routes' => $this->getRouteConfig(),
+            'routes'       => $this->getRouteConfig(),
         ];
     }
 
@@ -77,7 +77,7 @@ class ConfigProvider
             'delegators' => [
                 Application::class => [
                     ApplicationConfigInjectionDelegator::class,
-                ]
+                ],
             ],
         ];
     }
