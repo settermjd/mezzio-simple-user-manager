@@ -23,7 +23,7 @@
         }
     },
     "require": {
-        "laminas/laminas-db": "2.21.x-dev",
+        "laminas/laminas-db": "^2.20.0",
         "laminas/laminas-eventmanager": "^3.14",
         "laminas/laminas-hydrator": "^4.16",
         "laminas/laminas-inputfilter": "^2.31.0",
@@ -55,11 +55,5 @@
             "dealerdirect/phpcodesniffer-composer-installer": true
         },
         "sort-packages": true
-    },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "/home/settermjd/Workspace/PHP/Laminas/laminas-db"
-        }
-    ]
+    }
 }
