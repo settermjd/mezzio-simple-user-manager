@@ -1,4 +1,17 @@
 {
+    "name": "settermjd/mezzio-simple-user-manager",
+    "description": "This is a small and simplistic user manager for Mezzio-based applications.",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "mezzio"
+    ],
+    "homepage": "https://settermjd.github.io/mezzio-simple-user-manager/",
+    "support": {
+        "docs": "https://settermjd.github.io/mezzio-simple-user-manager/",
+        "issues": "https://github.com/settermjd/mezzio-simple-user-manager/issues",
+        "source": "https://github.com/settermjd/mezzio-simple-user-manager",
+        "rss": "https://github.com/settermjd/mezzio-simple-user-manager/releases.atom"
+    },
     "autoload": {
         "psr-4": {
             "SimpleUserManager\\": "src/"
