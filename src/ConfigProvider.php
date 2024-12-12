@@ -7,6 +7,7 @@ namespace SimpleUserManager\Entity;
 use Laminas\Db\Adapter\AdapterInterface;
 use Laminas\Db\Adapter\AdapterServiceFactory;
 use Mezzio\Application;
+use Mezzio\Authentication\AuthenticationMiddleware;
 use Mezzio\Container\ApplicationConfigInjectionDelegator;
 use SimpleUserManager\Handler\ForgotPasswordHandler;
 use SimpleUserManager\Handler\ForgotPasswordHandlerFactory;
@@ -117,7 +118,7 @@ class ConfigProvider
             ],
             [
                 'path'            => '/login',
-                'middleware'      => LoginMiddleware::class,
+                'middleware'      => AuthenticationMiddleware::class,
                 'allowed_methods' => ['POST'],
             ],
             [
