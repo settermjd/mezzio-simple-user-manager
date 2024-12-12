@@ -12,7 +12,6 @@ use Laminas\Db\Sql\Sql;
 use Laminas\Db\TableGateway\TableGateway;
 use Laminas\Hydrator\ReflectionHydrator;
 use SimpleUserManager\Entity\ResetPassword\ResetActive;
-use SimpleUserManager\Exception\PasswordResetNotActiveForUserException;
 use SimpleUserManager\Service\ResetPassword\Result;
 
 /**
@@ -21,18 +20,38 @@ use SimpleUserManager\Service\ResetPassword\Result;
  */
 final readonly class DbAdapter implements AdapterInterface
 {
+    public const string DEFAULT_TABLE_NAME = "user";
+    public const string DEFAULT_PASSWORD_COLUMN = "password";
+    public const string DEFAULT_IDENTITY_COLUMN = "email";
+
     /**
+     * @param DbAdapterInterface&Adapter $adapter
      * @param string $identityColumn  This identifies the column in the underlying table
      *                                that identifies the user resetting their password
      * @param string $tableName       This identifies the table to insert a record into to
      *                                identify that a user is resetting their password
      */
     public function __construct(
-        private DbAdapterInterface&Adapter $adapter,
-        private string $tableName = "user",
-        private string $passwordColumn = "password",
-        private string $identityColumn = "email"
+        private DbAdapterInterface $adapter,
+        private string $tableName = self::DEFAULT_TABLE_NAME,
+        private string $passwordColumn = self::DEFAULT_PASSWORD_COLUMN,
+        private string $identityColumn = self::DEFAULT_IDENTITY_COLUMN
     ) {}
+
+    public function getTableName(): string
+    {
+        return $this->tableName;
+    }
+
+    public function getPasswordColumn(): string
+    {
+        return $this->passwordColumn;
+    }
+
+    public function getIdentityColumn(): string
+    {
+        return $this->identityColumn;
+    }
 
     /**
      * This function registers a hash in the identity column of the table in the
