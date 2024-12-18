@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimpleUserManager\Middleware;
+namespace SimpleUserManager\Handler;
 
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\EventManager\EventManagerInterface;
@@ -28,7 +28,7 @@ use SimpleUserManager\Service\ForgotPassword\Result;
  * middleware class, as it only needs to make the one function call, and does
  * not have to provide any form of user-facing views, etc.
  */
-final readonly class ForgotPasswordMiddleware implements MiddlewareInterface
+final readonly class ForgotPasswordProcessorHandler implements RequestHandlerInterface
 {
     public const string ROUTE_NAME_FORGOT_PASSWORD    = "/forgot-password";
     public const string EVENT_FORGOT_PASSWORD_SUCCESS = "forgot-message-success";
@@ -45,7 +45,7 @@ final readonly class ForgotPasswordMiddleware implements MiddlewareInterface
      * process clears the stored authentication identity and then continues on
      * with the request pipeline
      */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $this->inputFilter->setData($request->getParsedBody());
         if (! $this->inputFilter->isValid()) {
@@ -67,6 +67,6 @@ final readonly class ForgotPasswordMiddleware implements MiddlewareInterface
                 ])
             );
 
-        return $handler->handle($request);
+        return new RedirectResponse(self::ROUTE_NAME_FORGOT_PASSWORD);
     }
 }

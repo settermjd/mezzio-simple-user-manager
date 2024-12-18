@@ -7,13 +7,13 @@ namespace SimpleUserManagerTest\Handler;
 use Laminas\EventManager\EventManagerInterface;
 use Laminas\Hydrator\NamingStrategy\NamingStrategyInterface;
 use PHPUnit\Framework\TestCase;
-use SimpleUserManager\Middleware\RegisterUserMiddleware;
-use SimpleUserManager\Middleware\RegisterUserMiddlewareFactory;
+use SimpleUserManager\Handler\RegisterUserProcessorHandler;
+use SimpleUserManager\Handler\RegisterUserProcessorHandlerFactory;
 use SimpleUserManager\Service\RegisterUser\Adapter\AdapterInterface;
 use SimpleUserManager\Validator\RegisterUserValidator;
 use SimpleUserManagerTest\InMemoryContainer;
 
-class RegisterUserMiddlewareFactoryTest extends TestCase
+class RegisterUserProcessorHandlerFactoryTest extends TestCase
 {
     public function testFactoryWithTemplate(): void
     {
@@ -39,9 +39,9 @@ class RegisterUserMiddlewareFactoryTest extends TestCase
             $this->createMock(NamingStrategyInterface::class)
         );
 
-        $factory = new RegisterUserMiddlewareFactory();
+        $factory = new RegisterUserProcessorHandlerFactory();
         $handler = $factory($container);
 
-        self::assertInstanceOf(RegisterUserMiddleware::class, $handler);
+        self::assertInstanceOf(RegisterUserProcessorHandler::class, $handler);
     }
 }

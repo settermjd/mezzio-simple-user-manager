@@ -6,13 +6,13 @@ namespace SimpleUserManagerTest\Handler;
 
 use Laminas\EventManager\EventManagerInterface;
 use PHPUnit\Framework\TestCase;
-use SimpleUserManager\Middleware\ResetPasswordMiddleware;
-use SimpleUserManager\Middleware\ResetPasswordMiddlewareFactory;
+use SimpleUserManager\Handler\ResetPasswordProcessorHandler;
+use SimpleUserManager\Handler\ResetPasswordProcessorHandlerFactory;
 use SimpleUserManager\Service\ResetPassword\Adapter\AdapterInterface;
 use SimpleUserManager\Validator\ResetPasswordValidator;
 use SimpleUserManagerTest\InMemoryContainer;
 
-class ResetPasswordMiddlewareFactoryTest extends TestCase
+class ResetPasswordProcessorHandlerFactoryTest extends TestCase
 {
     public function testFactoryWithTemplate(): void
     {
@@ -27,9 +27,9 @@ class ResetPasswordMiddlewareFactoryTest extends TestCase
         $container->setService(ResetPasswordValidator::class, new ResetPasswordValidator());
         $container->setService(EventManagerInterface::class, $eventManager);
 
-        $factory = new ResetPasswordMiddlewareFactory();
+        $factory = new ResetPasswordProcessorHandlerFactory();
         $handler = $factory($container);
 
-        self::assertInstanceOf(ResetPasswordMiddleware::class, $handler);
+        self::assertInstanceOf(ResetPasswordProcessorHandler::class, $handler);
     }
 }

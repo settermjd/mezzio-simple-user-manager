@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SimpleUserManager\Middleware;
+namespace SimpleUserManager\Handler;
 
 use Laminas\Authentication\AuthenticationService;
+use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -23,7 +24,7 @@ use Psr\Http\Server\RequestHandlerInterface;
  * middleware class, as it only needs to make the one function call, and does
  * not have to provide any form of user-facing views, etc.
  */
-final readonly class LogoutMiddleware implements MiddlewareInterface
+final readonly class LogoutHandler implements RequestHandlerInterface
 {
     public function __construct(private AuthenticationService $auth)
     {
@@ -32,10 +33,10 @@ final readonly class LogoutMiddleware implements MiddlewareInterface
     /**
      * process clears the stored authentication identity and then continues on with the request pipeline
      */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $this->auth->clearIdentity();
 
-        return $handler->handle($request);
+        return new RedirectResponse('/');
     }
 }

@@ -6,11 +6,11 @@ namespace SimpleUserManagerTest\Handler;
 
 use Laminas\Authentication\AuthenticationService;
 use PHPUnit\Framework\TestCase;
-use SimpleUserManager\Middleware\LogoutMiddleware;
-use SimpleUserManager\Middleware\LogoutMiddlewareFactory;
+use SimpleUserManager\Handler\LogoutHandler;
+use SimpleUserManager\Handler\LogoutHandlerFactory;
 use SimpleUserManagerTest\InMemoryContainer;
 
-class LogoutMiddlewareFactoryTest extends TestCase
+class LogoutHandlerFactoryTest extends TestCase
 {
     public function testFactoryWithTemplate(): void
     {
@@ -20,9 +20,9 @@ class LogoutMiddlewareFactoryTest extends TestCase
         $container = new InMemoryContainer();
         $container->setService(AuthenticationService::class, $authService);
 
-        $factory = new LogoutMiddlewareFactory();
+        $factory = new LogoutHandlerFactory();
         $handler = $factory($container);
 
-        self::assertInstanceOf(LogoutMiddleware::class, $handler);
+        self::assertInstanceOf(LogoutHandler::class, $handler);
     }
 }
