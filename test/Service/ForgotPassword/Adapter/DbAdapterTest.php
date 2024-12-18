@@ -26,7 +26,5 @@ class DbAdapterTest extends TestCase
         $result = $middlewareAdapter->forgotPassword($userIdentity);
         $this->assertInstanceOf(Result::class, $result);
         $this->assertSame($code, $result->getCode());
-
-        //$this->tearDownDatabase();
     }
 }

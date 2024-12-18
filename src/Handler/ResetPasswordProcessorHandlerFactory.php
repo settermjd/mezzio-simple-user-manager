@@ -2,19 +2,18 @@
 
 declare(strict_types=1);
 
-namespace SimpleUserManager\Middleware;
+namespace SimpleUserManager\Handler;
 
 use Laminas\EventManager\EventManagerInterface;
 use Psr\Container\ContainerInterface;
-use SimpleUserManager\Middleware\ResetPasswordMiddleware;
 use SimpleUserManager\Service\ResetPassword\Adapter\AdapterInterface;
 use SimpleUserManager\Validator\ResetPasswordValidator;
 
-class ResetPasswordMiddlewareFactory
+class ResetPasswordProcessorHandlerFactory
 {
-    public function __invoke(ContainerInterface $container): ResetPasswordMiddleware
+    public function __invoke(ContainerInterface $container): ResetPasswordProcessorHandler
     {
-        return new ResetPasswordMiddleware(
+        return new ResetPasswordProcessorHandler(
             $container->get(AdapterInterface::class),
             $container->get(ResetPasswordValidator::class),
             $container->get(EventManagerInterface::class)

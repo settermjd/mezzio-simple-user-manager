@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimpleUserManager\Middleware;
+namespace SimpleUserManager\Handler;
 
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\EventManager\EventManagerInterface;
@@ -11,7 +11,6 @@ use Laminas\InputFilter\InputFilterInterface;
 use Mezzio\Authentication\DefaultUser;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use SimpleUserManager\Service\RegisterUser\Adapter\AdapterInterface;
 
@@ -28,7 +27,7 @@ use SimpleUserManager\Service\RegisterUser\Adapter\AdapterInterface;
  * middleware class, as it only needs to make the one function call, and does
  * not have to provide any form of user-facing views, etc.
  */
-final readonly class RegisterUserMiddleware implements MiddlewareInterface
+final readonly class RegisterUserProcessorHandler implements RequestHandlerInterface
 {
     public const string ROUTE_NAME_REGISTER_USER = "/user/register";
 
@@ -43,10 +42,8 @@ final readonly class RegisterUserMiddleware implements MiddlewareInterface
     /**
      * process registers a new user with the underlying data source
      */
-    public function process(
-        ServerRequestInterface $request,
-        RequestHandlerInterface $handler
-    ): ResponseInterface {
+    public function handle(ServerRequestInterface $request): ResponseInterface
+    {
         $this->inputFilter->setData($request->getParsedBody());
         if (! $this->inputFilter->isValid()) {
             return new RedirectResponse(self::ROUTE_NAME_REGISTER_USER);
@@ -63,6 +60,6 @@ final readonly class RegisterUserMiddleware implements MiddlewareInterface
         );
         $this->adapter->registerUser($user);
 
-        return $handler->handle($request);
+        return new RedirectResponse(self::ROUTE_NAME_REGISTER_USER);
     }
 }

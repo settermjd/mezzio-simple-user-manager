@@ -7,12 +7,12 @@ namespace SimpleUserManagerTest\Handler;
 use Laminas\EventManager\EventManagerInterface;
 use Laminas\InputFilter\InputFilterInterface;
 use PHPUnit\Framework\TestCase;
-use SimpleUserManager\Middleware\ForgotPasswordMiddleware;
-use SimpleUserManager\Middleware\ForgotPasswordMiddlewareFactory;
+use SimpleUserManager\Handler\ForgotPasswordProcessorHandler;
+use SimpleUserManager\Handler\ForgotPasswordProcessorHandlerFactory;
 use SimpleUserManager\Service\ForgotPassword\Adapter\AdapterInterface;
 use SimpleUserManagerTest\InMemoryContainer;
 
-class ForgotPasswordMiddlewareFactoryTest extends TestCase
+class ForgotPasswordProcessorHandlerFactoryTest extends TestCase
 {
     public function testFactoryWithTemplate(): void
     {
@@ -33,9 +33,9 @@ class ForgotPasswordMiddlewareFactoryTest extends TestCase
             $this->createMock(EventManagerInterface::class)
         );
 
-        $factory = new ForgotPasswordMiddlewareFactory();
+        $factory = new ForgotPasswordProcessorHandlerFactory();
         $handler = $factory($container);
 
-        self::assertInstanceOf(ForgotPasswordMiddleware::class, $handler);
+        self::assertInstanceOf(ForgotPasswordProcessorHandler::class, $handler);
     }
 }

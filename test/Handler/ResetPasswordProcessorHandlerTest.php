@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace SimpleUserManagerTest\Middleware;
+namespace SimpleUserManagerTest\Handler;
 
+use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\EventManager\EventManagerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
-use SimpleUserManager\Middleware\ResetPasswordMiddleware;
+use SimpleUserManager\Handler\ResetPasswordProcessorHandler;
 use SimpleUserManager\Service\ResetPassword\Adapter\AdapterInterface;
 use SimpleUserManager\Service\ResetPassword\Result;
 use SimpleUserManager\Validator\ResetPasswordValidator;
 
-class ResetPasswordMiddlewareTest extends TestCase
+class ResetPasswordProcessorHandlerTest extends TestCase
 {
     /** @var AdapterInterface&MockObject */
     protected $adapter;
@@ -23,6 +23,47 @@ class ResetPasswordMiddlewareTest extends TestCase
     protected function setUp(): void
     {
         $this->adapter = $this->createMock(AdapterInterface::class);
+    }
+
+    public function testRedirectsWhenInputDataIsNotValid(): void
+    {
+        $email    = "user@";
+        $password = "password";
+
+        $this->adapter
+            ->expects($this->never())
+            ->method('resetPassword');
+
+        /** @var EventManagerInterface&MockObject $eventManager */
+        $eventManager = $this->createMock(EventManagerInterface::class);
+        $eventManager
+            ->expects($this->never())
+            ->method("trigger");
+
+        $handler = new ResetPasswordProcessorHandler(
+            $this->adapter,
+            new ResetPasswordValidator(),
+            $eventManager
+        );
+
+        /** @var ServerRequestInterface&MockObject $request */
+        $request = $this->createMock(ServerRequestInterface::class);
+        $request
+            ->expects($this->once())
+            ->method("getParsedBody")
+            ->willReturn([
+                "email"            => $email,
+                "password"         => $password,
+                "confirm_password" => $password,
+            ]);
+
+        $response = $handler->handle($request);
+
+        self::assertInstanceOf(RedirectResponse::class, $response);
+        self::assertSame(
+            ResetPasswordProcessorHandler::ROUTE_NAME_RESET_PASSWORD,
+            $response->getHeaderLine("Location")
+        );
     }
 
     public function testReturnsResponseWhenForgetPasswordSucceedsForUser(): void
@@ -43,7 +84,7 @@ class ResetPasswordMiddlewareTest extends TestCase
             ->method("trigger")
             ->with("reset-password-successful");
 
-        $middleware = new ResetPasswordMiddleware(
+        $handler = new ResetPasswordProcessorHandler(
             $this->adapter,
             new ResetPasswordValidator(),
             $eventManager
@@ -60,10 +101,7 @@ class ResetPasswordMiddlewareTest extends TestCase
                 "confirm_password" => $password,
             ]);
 
-        /** @var RequestHandlerInterface&MockObject $handler */
-        $handler = $this->createMock(RequestHandlerInterface::class);
-
-        $response = $middleware->process($request, $handler);
+        $response = $handler->handle($request);
 
         self::assertInstanceOf(ResponseInterface::class, $response);
     }

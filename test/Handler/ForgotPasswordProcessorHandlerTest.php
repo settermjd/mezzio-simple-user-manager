@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimpleUserManagerTest\Middleware;
+namespace SimpleUserManagerTest\Handler;
 
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\EventManager\EventManagerInterface;
@@ -11,13 +11,12 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
-use SimpleUserManager\Middleware\ForgotPasswordMiddleware;
+use SimpleUserManager\Handler\ForgotPasswordProcessorHandler;
 use SimpleUserManager\Service\ForgotPassword\Adapter\AdapterInterface;
 use SimpleUserManager\Service\ForgotPassword\Result;
 use SimpleUserManager\Validator\ForgotPasswordValidator;
 
-class ForgotPasswordMiddlewareTest extends TestCase
+class ForgotPasswordProcessorHandlerTest extends TestCase
 {
     /** @var AdapterInterface&MockObject */
     protected $adapter;
@@ -45,7 +44,7 @@ class ForgotPasswordMiddlewareTest extends TestCase
                 "email" => $userIdentity,
             ]));
 
-        $middleware = new ForgotPasswordMiddleware(
+        $handler = new ForgotPasswordProcessorHandler(
             $this->adapter,
             new ForgotPasswordValidator(),
             $eventManager,
@@ -60,10 +59,7 @@ class ForgotPasswordMiddlewareTest extends TestCase
                 "email" => $userIdentity,
             ]);
 
-        /** @var RequestHandlerInterface&MockObject $handler */
-        $handler = $this->createMock(RequestHandlerInterface::class);
-
-        $response = $middleware->process($request, $handler);
+        $response = $handler->handle($request);
 
         self::assertInstanceOf(ResponseInterface::class, $response);
     }
@@ -86,7 +82,7 @@ class ForgotPasswordMiddlewareTest extends TestCase
                 "email" => $userIdentity,
             ]));
 
-        $middleware = new ForgotPasswordMiddleware(
+        $handler = new ForgotPasswordProcessorHandler(
             $this->adapter,
             new ForgotPasswordValidator(),
             $eventManager,
@@ -101,10 +97,7 @@ class ForgotPasswordMiddlewareTest extends TestCase
                 "email" => $userIdentity,
             ]);
 
-        /** @var RequestHandlerInterface&MockObject $handler */
-        $handler = $this->createMock(RequestHandlerInterface::class);
-
-        $response = $middleware->process($request, $handler);
+        $response = $handler->handle($request);
 
         self::assertInstanceOf(ResponseInterface::class, $response);
     }
@@ -123,7 +116,7 @@ class ForgotPasswordMiddlewareTest extends TestCase
         /** @var EventManagerInterface&MockObject $eventManager */
         $eventManager = $this->createMock(EventManagerInterface::class);
 
-        $middleware = new ForgotPasswordMiddleware($this->adapter, $inputFilter, $eventManager);
+        $handler = new ForgotPasswordProcessorHandler($this->adapter, $inputFilter, $eventManager);
 
         /** @var ServerRequestInterface&MockObject $request */
         $request = $this->createMock(ServerRequestInterface::class);
@@ -134,15 +127,12 @@ class ForgotPasswordMiddlewareTest extends TestCase
                 "email" => $userIdentity,
             ]);
 
-        /** @var RequestHandlerInterface&MockObject $handler */
-        $handler = $this->createMock(RequestHandlerInterface::class);
-
-        $response = $middleware->process($request, $handler);
+        $response = $handler->handle($request);
 
         self::assertInstanceOf(RedirectResponse::class, $response);
         self::assertSame(
             $response->getHeaderLine("Location"),
-            ForgotPasswordMiddleware::ROUTE_NAME_FORGOT_PASSWORD
+            ForgotPasswordProcessorHandler::ROUTE_NAME_FORGOT_PASSWORD
         );
     }
 }

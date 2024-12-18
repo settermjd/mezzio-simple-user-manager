@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SimpleUserManagerTest\Middleware;
+namespace SimpleUserManagerTest\Handler;
 
+use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\EventManager\EventManagerInterface;
 use Laminas\Hydrator\NamingStrategy\MapNamingStrategy;
 use Mezzio\Authentication\DefaultUser;
@@ -11,13 +12,12 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
-use SimpleUserManager\Middleware\RegisterUserMiddleware;
+use SimpleUserManager\Handler\RegisterUserProcessorHandler;
 use SimpleUserManager\Service\RegisterUser\Adapter\AdapterInterface;
 use SimpleUserManager\Service\RegisterUser\Result;
 use SimpleUserManager\Validator\RegisterUserValidator;
 
-class RegisterUserMiddlewareTest extends TestCase
+class RegisterUserProcessorHandlerTest extends TestCase
 {
     /** @var AdapterInterface&MockObject */
     protected $adapter;
@@ -25,6 +25,46 @@ class RegisterUserMiddlewareTest extends TestCase
     protected function setUp(): void
     {
         $this->adapter = $this->createMock(AdapterInterface::class);
+    }
+
+    public function testRedirectsWhenInputIsNotValid()
+    {
+        /** @var EventManagerInterface&MockObject $eventManager */
+        $eventManager = $this->createMock(EventManagerInterface::class);
+
+        $namingStrategy = MapNamingStrategy::createFromHydrationMap(
+            [
+                'email'      => 'email',
+                'password'   => 'password',
+                'first_name' => 'firstName',
+                'last_name'  => 'lastName',
+            ]
+        );
+
+        $handler = new RegisterUserProcessorHandler(
+            $this->adapter,
+            new RegisterUserValidator(),
+            $eventManager,
+            $namingStrategy
+        );
+
+        /** @var ServerRequestInterface&MockObject $request */
+        $request = $this->createMock(ServerRequestInterface::class);
+        $request
+            ->expects($this->once())
+            ->method("getParsedBody")
+            ->willReturn([
+                "email"            => "@example.com",
+                "password"         => "password",
+                "confirm_password" => "password",
+                "first_name"       => "Matthew",
+                "last_name"        => "Setter",
+            ]);
+
+        $response = $handler->handle($request);
+
+        self::assertInstanceOf(RedirectResponse::class, $response);
+        self::assertSame(RegisterUserProcessorHandler::ROUTE_NAME_REGISTER_USER, $response->getHeaderLine("Location"));
     }
 
     public function testReturnsResponseWhenForgetPasswordSucceedsForUser(): void
@@ -56,7 +96,7 @@ class RegisterUserMiddlewareTest extends TestCase
             ]
         );
 
-        $middleware = new RegisterUserMiddleware(
+        $handler = new RegisterUserProcessorHandler(
             $this->adapter,
             new RegisterUserValidator(),
             $eventManager,
@@ -76,10 +116,7 @@ class RegisterUserMiddlewareTest extends TestCase
                 "last_name"        => "Setter",
             ]);
 
-        /** @var RequestHandlerInterface&MockObject $handler */
-        $handler = $this->createMock(RequestHandlerInterface::class);
-
-        $response = $middleware->process($request, $handler);
+        $response = $handler->handle($request);
 
         self::assertInstanceOf(ResponseInterface::class, $response);
     }

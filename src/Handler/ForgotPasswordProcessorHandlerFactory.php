@@ -2,18 +2,17 @@
 
 declare(strict_types=1);
 
-namespace SimpleUserManager\Middleware;
+namespace SimpleUserManager\Handler;
 
 use Laminas\EventManager\EventManagerInterface;
 use Psr\Container\ContainerInterface;
-use SimpleUserManager\Middleware\ForgotPasswordMiddleware;
 use SimpleUserManager\Service\ForgotPassword\Adapter\AdapterInterface;
 
-class ForgotPasswordMiddlewareFactory
+class ForgotPasswordProcessorHandlerFactory
 {
-    public function __invoke(ContainerInterface $container): ForgotPasswordMiddleware
+    public function __invoke(ContainerInterface $container): ForgotPasswordProcessorHandler
     {
-        return new ForgotPasswordMiddleware(
+        return new ForgotPasswordProcessorHandler(
             $container->get(AdapterInterface::class),
             $container->get("ForgotPasswordInputFilter"),
             $container->get(EventManagerInterface::class),
