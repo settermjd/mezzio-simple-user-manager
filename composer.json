@@ -49,6 +49,7 @@
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
         "test": "phpunit --colors=always",
+        "test-with-coverage": "XDEBUG_MODE=coverage phpunit --colors=always --coverage-html test/_coverage",
         "test-docs": "vale README.md",
         "markdownlint": "markdownlint README.md"
     },

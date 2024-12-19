@@ -1,2 +1,5 @@
 # Ignore any SQLite database files
 **/*.sqlite
+
+# Ignore the PHPUnit code coverage directory
+test/_coverage
