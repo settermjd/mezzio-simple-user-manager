@@ -4,8 +4,64 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e1bcca3003ea247a8bd1f8df8e613509",
+    "content-hash": "db15d466148de941181ee749b7c1dd4b",
     "packages": [
+        {
+            "name": "gsteel/dot",
+            "version": "1.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gsteel/dot.git",
+                "reference": "7d49352beebdbda40011e47ac2051b9c151efacd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gsteel/dot/zipball/7d49352beebdbda40011e47ac2051b9c151efacd",
+                "reference": "7d49352beebdbda40011e47ac2051b9c151efacd",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~8.1 || ~8.2.0 || ~8.3"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "^12.0.0",
+                "phpunit/phpunit": "^10.3.4",
+                "psalm/plugin-phpunit": "^0.18.4",
+                "squizlabs/php_codesniffer": "^3.7.2",
+                "vimeo/psalm": "^5.15.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GSteel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "George Steel",
+                    "email": "george@net-glue.co.uk"
+                }
+            ],
+            "description": "A Utility for retrieving typed values from nested arrays",
+            "homepage": "https://github.com/gsteel/dot",
+            "keywords": [
+                "array",
+                "config",
+                "configuration",
+                "dot",
+                "utility"
+            ],
+            "support": {
+                "issues": "https://github.com/gsteel/dot/issues",
+                "rss": "https://github.com/gsteel/dot/releases.atom",
+                "source": "https://github.com/gsteel/dot"
+            },
+            "time": "2023-09-18T22:36:33+00:00"
+        },
         {
             "name": "laminas/laminas-authentication",
             "version": "2.18.0",

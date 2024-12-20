@@ -23,6 +23,7 @@
         }
     },
     "require": {
+        "gsteel/dot": "^1.7",
         "laminas/laminas-db": "^2.20.0",
         "laminas/laminas-eventmanager": "^3.14",
         "laminas/laminas-hydrator": "^4.16",
