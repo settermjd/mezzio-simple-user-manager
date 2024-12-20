@@ -15,7 +15,7 @@ use SimpleUserManager\Service\ForgotPassword\Result;
  */
 final readonly class DbAdapter implements AdapterInterface
 {
-    public const string DEFAULT_TABLE_NAME = "password_resets";
+    public const string DEFAULT_TABLE_NAME      = "password_resets";
     public const string DEFAULT_IDENTITY_COLUMN = "user_identity";
 
     /**
@@ -28,7 +28,8 @@ final readonly class DbAdapter implements AdapterInterface
         private DbAdapterInterface $adapter,
         private string $tableName = self::DEFAULT_TABLE_NAME,
         private string $identityColumn = self::DEFAULT_IDENTITY_COLUMN,
-    ) {}
+    ) {
+    }
 
     public function getTableName(): string
     {

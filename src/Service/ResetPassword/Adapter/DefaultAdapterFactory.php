@@ -14,7 +14,7 @@ class DefaultAdapterFactory
     {
         $config = $container->get("config");
 
-        $tableName = Dot::stringOrNull(
+        $tableName      = Dot::stringOrNull(
             "reset_password.adapter.db_adapter.table",
             $config
         ) ?? DbAdapter::DEFAULT_TABLE_NAME;
