@@ -7,6 +7,7 @@ namespace SimpleUserManager\Handler;
 use Laminas\EventManager\EventManagerInterface;
 use Psr\Container\ContainerInterface;
 use SimpleUserManager\Service\ForgotPassword\Adapter\AdapterInterface;
+use SimpleUserManager\Validator\ForgotPasswordValidator;
 
 class ForgotPasswordProcessorHandlerFactory
 {
@@ -14,7 +15,7 @@ class ForgotPasswordProcessorHandlerFactory
     {
         return new ForgotPasswordProcessorHandler(
             $container->get(AdapterInterface::class),
-            $container->get("ForgotPasswordInputFilter"),
+            $container->get(ForgotPasswordValidator::class),
             $container->get(EventManagerInterface::class),
         );
     }
