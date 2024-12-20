@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleUserManager\Service\ResetPassword\Adapter;
 
+use GSteel\Dot;
 use Laminas\Db\Adapter\AdapterInterface;
 use Psr\Container\ContainerInterface;
 
@@ -13,9 +14,18 @@ class DefaultAdapterFactory
     {
         $config = $container->get("config");
 
-        $tableName      = $config["reset_password"]["adapter"]["db_adapter"]["table"] ?? DbAdapter::DEFAULT_TABLE_NAME;
-        $passwordColumn = $config["reset_password"]["adapter"]["db_adapter"]["password_column"] ?? DbAdapter::DEFAULT_PASSWORD_COLUMN;
-        $identityColumn = $config["reset_password"]["adapter"]["db_adapter"]["identity_column"] ?? DbAdapter::DEFAULT_IDENTITY_COLUMN;
+        $tableName = Dot::stringOrNull(
+            "reset_password.adapter.db_adapter.table",
+            $config
+        ) ?? DbAdapter::DEFAULT_TABLE_NAME;
+        $passwordColumn = Dot::stringOrNull(
+            "reset_password.adapter.db_adapter.password_column",
+            $config
+        ) ?? DbAdapter::DEFAULT_PASSWORD_COLUMN;
+        $identityColumn = Dot::stringOrNull(
+            "reset_password.adapter.db_adapter.identity_column",
+            $config
+        ) ?? DbAdapter::DEFAULT_IDENTITY_COLUMN;
 
         return new DbAdapter(
             $container->get(AdapterInterface::class),
