@@ -12,15 +12,21 @@ use Mezzio\Authentication\AuthenticationMiddleware;
 use Mezzio\Container\ApplicationConfigInjectionDelegator;
 use SimpleUserManager\Factory\EventManagerFactory;
 use SimpleUserManager\Handler\ForgotPasswordHandler;
+use SimpleUserManager\Handler\ForgotPasswordHandlerFactory;
+use SimpleUserManager\Handler\ForgotPasswordProcessorHandler;
 use SimpleUserManager\Handler\ForgotPasswordProcessorHandlerFactory;
 use SimpleUserManager\Handler\LoginHandler;
 use SimpleUserManager\Handler\LoginHandlerFactory;
 use SimpleUserManager\Handler\LogoutHandler;
 use SimpleUserManager\Handler\LogoutHandlerFactory;
 use SimpleUserManager\Handler\RegisterUserHandler;
+use SimpleUserManager\Handler\RegisterUserHandlerFactory;
+use SimpleUserManager\Handler\RegisterUserProcessorHandler;
 use SimpleUserManager\Handler\RegisterUserProcessorHandlerFactory;
 use SimpleUserManager\Handler\ResetPasswordHandler;
 use SimpleUserManager\Handler\ResetPasswordHandlerFactory;
+use SimpleUserManager\Handler\ResetPasswordProcessorHandler;
+use SimpleUserManager\Handler\ResetPasswordProcessorHandlerFactory;
 use SimpleUserManager\Handler\UserProfileHandler;
 use SimpleUserManager\Handler\UserProfileHandlerFactory;
 use SimpleUserManager\Validator\ForgotPasswordValidator;
@@ -72,16 +78,16 @@ class ConfigProvider
             'factories'  => [
                 AdapterInterface::class                                => AdapterServiceFactory::class,
                 EventManagerInterface::class                           => EventManagerFactory::class,
-                ForgotPasswordHandler::class                           => ForgotPasswordProcessorHandlerFactory::class,
-                ForgotPasswordHandler::class                           => ForgotPasswordProcessorHandlerFactory::class,
+                ForgotPasswordHandler::class                           => ForgotPasswordHandlerFactory::class,
+                ForgotPasswordProcessorHandler::class                  => ForgotPasswordProcessorHandlerFactory::class,
                 LoginHandler::class                                    => LoginHandlerFactory::class,
                 LogoutHandler::class                                   => LogoutHandlerFactory::class,
-                RegisterUserHandler::class                             => RegisterUserProcessorHandlerFactory::class,
-                RegisterUserHandler::class                             => RegisterUserProcessorHandlerFactory::class,
+                RegisterUserHandler::class                             => RegisterUserHandlerFactory::class,
+                RegisterUserProcessorHandler::class                    => RegisterUserProcessorHandlerFactory::class,
                 ResetPasswordHandler::class                            => ResetPasswordHandlerFactory::class,
-                ResetPasswordHandler::class                            => ResetPasswordHandlerFactory::class,
+                ResetPasswordProcessorHandler::class                   => ResetPasswordProcessorHandlerFactory::class,
                 UserProfileHandler::class                              => UserProfileHandlerFactory::class,
-                Service\ForgotPassword\Adapter\AdapterInterface::class => Service\ResetPassword\Adapter\DefaultAdapterFactory::class,
+                Service\ForgotPassword\Adapter\AdapterInterface::class => Service\ForgotPassword\Adapter\DefaultAdapterFactory::class,
                 Service\RegisterUser\Adapter\AdapterInterface::class   => Service\RegisterUser\Adapter\DefaultAdapterFactory::class,
                 Service\ResetPassword\Adapter\AdapterInterface::class  => Service\ResetPassword\Adapter\DefaultAdapterFactory::class,
             ],
