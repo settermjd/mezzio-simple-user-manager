@@ -6,9 +6,11 @@ namespace SimpleUserManager;
 
 use Laminas\Db\Adapter\AdapterInterface;
 use Laminas\Db\Adapter\AdapterServiceFactory;
+use Laminas\EventManager\EventManagerInterface;
 use Mezzio\Application;
 use Mezzio\Authentication\AuthenticationMiddleware;
 use Mezzio\Container\ApplicationConfigInjectionDelegator;
+use SimpleUserManager\Factory\EventManagerFactory;
 use SimpleUserManager\Handler\ForgotPasswordHandler;
 use SimpleUserManager\Handler\ForgotPasswordProcessorHandlerFactory;
 use SimpleUserManager\Handler\LoginHandler;
@@ -69,6 +71,7 @@ class ConfigProvider
             ],
             'factories'  => [
                 AdapterInterface::class                                => AdapterServiceFactory::class,
+                EventManagerInterface::class                           => EventManagerFactory::class,
                 ForgotPasswordHandler::class                           => ForgotPasswordProcessorHandlerFactory::class,
                 ForgotPasswordHandler::class                           => ForgotPasswordProcessorHandlerFactory::class,
                 LoginHandler::class                                    => LoginHandlerFactory::class,
