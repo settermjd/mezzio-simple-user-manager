@@ -50,8 +50,8 @@ class ConfigProvider
     {
         return [
             'paths' => [
-                'sum-app'    => ['templates/app'],
-                'sum-layout' => ['templates/layout'],
+                'sum-app'    => [__DIR__ . '/../templates/app'],
+                'sum-layout' => [__DIR__ . '/../templates/layout'],
             ],
         ];
     }
