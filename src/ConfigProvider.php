@@ -109,7 +109,7 @@ class ConfigProvider
             ],
             [
                 'path'            => '/forgot-password',
-                'middleware'      => ForgotPasswordHandler::class,
+                'middleware'      => ForgotPasswordProcessorHandler::class,
                 'allowed_methods' => ['POST'],
             ],
             [
@@ -119,7 +119,7 @@ class ConfigProvider
             ],
             [
                 'path'            => '/reset-password',
-                'middleware'      => ResetPasswordHandler::class,
+                'middleware'      => ResetPasswordProcessorHandler::class,
                 'allowed_methods' => ['POST'],
             ],
             [
@@ -144,7 +144,7 @@ class ConfigProvider
             ],
             [
                 'path'            => '/register',
-                'middleware'      => RegisterUserHandler::class,
+                'middleware'      => RegisterUserProcessorHandler::class,
                 'allowed_methods' => ['POST'],
             ],
             [
