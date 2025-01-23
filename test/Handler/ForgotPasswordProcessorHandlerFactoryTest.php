@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace SimpleUserManagerTest\Handler;
 
 use Laminas\EventManager\EventManagerInterface;
-use Laminas\InputFilter\InputFilterInterface;
 use PHPUnit\Framework\TestCase;
 use SimpleUserManager\Handler\ForgotPasswordProcessorHandler;
 use SimpleUserManager\Handler\ForgotPasswordProcessorHandlerFactory;
 use SimpleUserManager\Service\ForgotPassword\Adapter\AdapterInterface;
+use SimpleUserManager\Validator\ForgotPasswordValidator;
 use SimpleUserManagerTest\InMemoryContainer;
 
 class ForgotPasswordProcessorHandlerFactoryTest extends TestCase
@@ -22,11 +22,7 @@ class ForgotPasswordProcessorHandlerFactoryTest extends TestCase
             /** @param AdapterInterface&MockObject */
             $this->createMock(AdapterInterface::class)
         );
-        $container->setService(
-            "ForgotPasswordInputFilter",
-            /** @param InputFilterInterface&MockObject */
-            $this->createMock(InputFilterInterface::class)
-        );
+        $container->setService(ForgotPasswordValidator::class, new ForgotPasswordValidator());
         $container->setService(
             EventManagerInterface::class,
             /** @param EventManagerInterface&MockObject */
