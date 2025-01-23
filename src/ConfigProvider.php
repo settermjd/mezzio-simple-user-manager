@@ -29,6 +29,12 @@ use SimpleUserManager\Handler\ResetPasswordProcessorHandler;
 use SimpleUserManager\Handler\ResetPasswordProcessorHandlerFactory;
 use SimpleUserManager\Handler\UserProfileHandler;
 use SimpleUserManager\Handler\UserProfileHandlerFactory;
+use SimpleUserManager\Service\ForgotPassword\Adapter\AdapterInterface as FPAdapterInterface;
+use SimpleUserManager\Service\ForgotPassword\Adapter\DefaultAdapterFactory as FPDefaultAdapterFactory;
+use SimpleUserManager\Service\RegisterUser\Adapter\AdapterInterface as RUAdapterInterface;
+use SimpleUserManager\Service\RegisterUser\Adapter\DefaultAdapterFactory as RUDefaultAdapterFactory;
+use SimpleUserManager\Service\ResetPassword\Adapter\AdapterInterface as RPAdapterInterface;
+use SimpleUserManager\Service\ResetPassword\Adapter\DefaultAdapterFactory as RPDefaultAdapterFactory;
 use SimpleUserManager\Validator\ForgotPasswordValidator;
 use SimpleUserManager\Validator\RegisterUserValidator;
 use SimpleUserManager\Validator\ResetPasswordValidator;
@@ -76,20 +82,20 @@ class ConfigProvider
                 ResetPasswordValidator::class  => ResetPasswordValidator::class,
             ],
             'factories'  => [
-                AdapterInterface::class                                => AdapterServiceFactory::class,
-                EventManagerInterface::class                           => EventManagerFactory::class,
-                ForgotPasswordHandler::class                           => ForgotPasswordHandlerFactory::class,
-                ForgotPasswordProcessorHandler::class                  => ForgotPasswordProcessorHandlerFactory::class,
-                LoginHandler::class                                    => LoginHandlerFactory::class,
-                LogoutHandler::class                                   => LogoutHandlerFactory::class,
-                RegisterUserHandler::class                             => RegisterUserHandlerFactory::class,
-                RegisterUserProcessorHandler::class                    => RegisterUserProcessorHandlerFactory::class,
-                ResetPasswordHandler::class                            => ResetPasswordHandlerFactory::class,
-                ResetPasswordProcessorHandler::class                   => ResetPasswordProcessorHandlerFactory::class,
-                UserProfileHandler::class                              => UserProfileHandlerFactory::class,
-                Service\ForgotPassword\Adapter\AdapterInterface::class => Service\ForgotPassword\Adapter\DefaultAdapterFactory::class,
-                Service\RegisterUser\Adapter\AdapterInterface::class   => Service\RegisterUser\Adapter\DefaultAdapterFactory::class,
-                Service\ResetPassword\Adapter\AdapterInterface::class  => Service\ResetPassword\Adapter\DefaultAdapterFactory::class,
+                AdapterInterface::class               => AdapterServiceFactory::class,
+                EventManagerInterface::class          => EventManagerFactory::class,
+                ForgotPasswordHandler::class          => ForgotPasswordHandlerFactory::class,
+                ForgotPasswordProcessorHandler::class => ForgotPasswordProcessorHandlerFactory::class,
+                LoginHandler::class                   => LoginHandlerFactory::class,
+                LogoutHandler::class                  => LogoutHandlerFactory::class,
+                RegisterUserHandler::class            => RegisterUserHandlerFactory::class,
+                RegisterUserProcessorHandler::class   => RegisterUserProcessorHandlerFactory::class,
+                ResetPasswordHandler::class           => ResetPasswordHandlerFactory::class,
+                ResetPasswordProcessorHandler::class  => ResetPasswordProcessorHandlerFactory::class,
+                UserProfileHandler::class             => UserProfileHandlerFactory::class,
+                FPAdapterInterface::class             => FPDefaultAdapterFactory::class,
+                RUAdapterInterface::class             => RUDefaultAdapterFactory::class,
+                RPAdapterInterface::class             => RPDefaultAdapterFactory::class,
             ],
             'delegators' => [
                 Application::class => [
