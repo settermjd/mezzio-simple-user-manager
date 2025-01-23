@@ -10,6 +10,7 @@ use Laminas\Db\ResultSet\HydratingResultSet;
 use Laminas\Db\Sql\Predicate\Expression;
 use Laminas\Db\Sql\Sql;
 use Laminas\Db\TableGateway\TableGateway;
+use Laminas\Hydrator\NamingStrategy\UnderscoreNamingStrategy;
 use Laminas\Hydrator\ReflectionHydrator;
 use SimpleUserManager\Entity\ResetPassword\ResetActive;
 use SimpleUserManager\Service\ResetPassword\Result;
@@ -84,10 +85,12 @@ final readonly class DbAdapter implements AdapterInterface
                 new Expression("(date('now', 'localtime') <= date(pr.created_at, '+5 days'))"),
             ]);
 
+        $hydrator = new ReflectionHydrator();
+        $hydrator->setNamingStrategy(new UnderscoreNamingStrategy());
         $results = $this->adapter->query(
             $sql->buildSqlString($select),
             Adapter::QUERY_MODE_EXECUTE,
-            new HydratingResultSet(new ReflectionHydrator(), new ResetActive())
+            new HydratingResultSet($hydrator, new ResetActive())
         );
 
         /** @var ResetActive $result */

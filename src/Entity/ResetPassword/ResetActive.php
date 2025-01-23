@@ -6,10 +6,10 @@ namespace SimpleUserManager\Entity\ResetPassword;
 
 class ResetActive
 {
-    private string $reset_active;
+    private string $resetActive;
 
     public function isResetActive(): bool
     {
-        return $this->reset_active === "yes";
+        return $this->resetActive === "yes";
     }
 }
