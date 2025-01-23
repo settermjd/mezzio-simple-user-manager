@@ -16,7 +16,7 @@ class DefaultAdapterFactoryTest extends TestCase
 {
     public function testCanInstantiateAdapterFactory()
     {
-        /** @var AdapterInterface&Adapter&MockObject $container */
+        /** @var AdapterInterface&Adapter&MockObject $dbAdapter */
         $dbAdapter = $this->createMock(AdapterInterface::class);
 
         /** @var ContainerInterface&MockObject $container */
