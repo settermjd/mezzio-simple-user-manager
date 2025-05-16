@@ -17,8 +17,7 @@ use SimpleUserManager\Validator\ResetPasswordValidator;
 
 class ResetPasswordProcessorHandlerTest extends TestCase
 {
-    /** @var AdapterInterface&MockObject */
-    protected $adapter;
+    protected AdapterInterface&MockObject $adapter;
 
     protected function setUp(): void
     {
@@ -34,7 +33,6 @@ class ResetPasswordProcessorHandlerTest extends TestCase
             ->expects($this->never())
             ->method('resetPassword');
 
-        /** @var EventManagerInterface&MockObject $eventManager */
         $eventManager = $this->createMock(EventManagerInterface::class);
         $eventManager
             ->expects($this->never())
@@ -46,7 +44,6 @@ class ResetPasswordProcessorHandlerTest extends TestCase
             $eventManager
         );
 
-        /** @var ServerRequestInterface&MockObject $request */
         $request = $this->createMock(ServerRequestInterface::class);
         $request
             ->expects($this->once())
@@ -77,7 +74,6 @@ class ResetPasswordProcessorHandlerTest extends TestCase
             ->with($email, $password)
             ->willReturn(new Result(Result::SUCCESS));
 
-        /** @var EventManagerInterface&MockObject $eventManager */
         $eventManager = $this->createMock(EventManagerInterface::class);
         $eventManager
             ->expects($this->once())
@@ -90,7 +86,6 @@ class ResetPasswordProcessorHandlerTest extends TestCase
             $eventManager
         );
 
-        /** @var ServerRequestInterface&MockObject $request */
         $request = $this->createMock(ServerRequestInterface::class);
         $request
             ->expects($this->once())

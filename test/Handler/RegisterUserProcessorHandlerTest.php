@@ -19,17 +19,15 @@ use SimpleUserManager\Validator\RegisterUserValidator;
 
 class RegisterUserProcessorHandlerTest extends TestCase
 {
-    /** @var AdapterInterface&MockObject */
-    protected $adapter;
+    protected AdapterInterface&MockObject $adapter;
 
     protected function setUp(): void
     {
         $this->adapter = $this->createMock(AdapterInterface::class);
     }
 
-    public function testRedirectsWhenInputIsNotValid()
+    public function testRedirectsWhenInputIsNotValid(): void
     {
-        /** @var EventManagerInterface&MockObject $eventManager */
         $eventManager = $this->createMock(EventManagerInterface::class);
 
         $namingStrategy = MapNamingStrategy::createFromHydrationMap(
@@ -48,7 +46,6 @@ class RegisterUserProcessorHandlerTest extends TestCase
             $namingStrategy
         );
 
-        /** @var ServerRequestInterface&MockObject $request */
         $request = $this->createMock(ServerRequestInterface::class);
         $request
             ->expects($this->once())
@@ -84,7 +81,6 @@ class RegisterUserProcessorHandlerTest extends TestCase
             ->with($user)
             ->willReturn(new Result(code: Result::SUCCESS));
 
-        /** @var EventManagerInterface&MockObject $eventManager */
         $eventManager = $this->createMock(EventManagerInterface::class);
 
         $namingStrategy = MapNamingStrategy::createFromHydrationMap(
@@ -103,7 +99,6 @@ class RegisterUserProcessorHandlerTest extends TestCase
             $namingStrategy
         );
 
-        /** @var ServerRequestInterface&MockObject $request */
         $request = $this->createMock(ServerRequestInterface::class);
         $request
             ->expects($this->once())

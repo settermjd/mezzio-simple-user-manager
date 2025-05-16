@@ -13,7 +13,7 @@ use SimpleUserManager\Service\RegisterUser\Adapter\DefaultAdapterFactory;
 
 class DefaultAdapterFactoryTest extends TestCase
 {
-    public function testCanInstantiateAdapterFactory()
+    public function testCanInstantiateAdapterFactory(): void
     {
         /** @var AdapterInterface&MockObject $dbAdapter */
         $dbAdapter = $this->createMock(AdapterInterface::class);

@@ -18,8 +18,7 @@ use SimpleUserManager\Validator\ForgotPasswordValidator;
 
 class ForgotPasswordProcessorHandlerTest extends TestCase
 {
-    /** @var AdapterInterface&MockObject */
-    protected $adapter;
+    protected AdapterInterface&MockObject $adapter;
 
     protected function setUp(): void
     {
@@ -35,7 +34,6 @@ class ForgotPasswordProcessorHandlerTest extends TestCase
             ->with($userIdentity)
             ->willReturn(new Result(Result::SUCCESS));
 
-        /** @var EventManagerInterface&MockObject $eventManager */
         $eventManager = $this->createMock(EventManagerInterface::class);
         $eventManager
             ->expects($this->once())
@@ -50,7 +48,6 @@ class ForgotPasswordProcessorHandlerTest extends TestCase
             $eventManager,
         );
 
-        /** @var ServerRequestInterface&MockObject $request */
         $request = $this->createMock(ServerRequestInterface::class);
         $request
             ->expects($this->once())
@@ -73,7 +70,6 @@ class ForgotPasswordProcessorHandlerTest extends TestCase
             ->with($userIdentity)
             ->willReturn(new Result(Result::FAILURE_RECORD_EXISTS_FOR_PROVIDED_IDENTITY));
 
-        /** @var EventManagerInterface&MockObject $eventManager */
         $eventManager = $this->createMock(EventManagerInterface::class);
         $eventManager
             ->expects($this->once())
@@ -88,7 +84,6 @@ class ForgotPasswordProcessorHandlerTest extends TestCase
             $eventManager,
         );
 
-        /** @var ServerRequestInterface&MockObject $request */
         $request = $this->createMock(ServerRequestInterface::class);
         $request
             ->expects($this->once())
@@ -106,19 +101,16 @@ class ForgotPasswordProcessorHandlerTest extends TestCase
     {
         $userIdentity = "user@example.com";
 
-        /** @var ForgotPasswordValidator&MockObject $inputFilter */
         $inputFilter = $this->createMock(ForgotPasswordValidator::class);
         $inputFilter
             ->expects($this->once())
             ->method("isValid")
             ->willReturn(false);
 
-        /** @var EventManagerInterface&MockObject $eventManager */
         $eventManager = $this->createMock(EventManagerInterface::class);
 
         $handler = new ForgotPasswordProcessorHandler($this->adapter, $inputFilter, $eventManager);
 
-        /** @var ServerRequestInterface&MockObject $request */
         $request = $this->createMock(ServerRequestInterface::class);
         $request
             ->expects($this->once())

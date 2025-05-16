@@ -33,17 +33,20 @@ final class Result
 
     /**
      * An array of string reasons why the authentication attempt was unsuccessful
-     *
      * If authentication was successful, this should be an empty array.
+     *
+     * @var array<int,string> $messages
      */
     protected array $messages;
 
     /**
      * Sets the result code, identity, and failure messages
+     *
+     * @param array<int,string> $messages
      */
     public function __construct(int $code, array $messages = [])
     {
-        $this->code     = (int) $code;
+        $this->code     = $code;
         $this->messages = $messages;
     }
 
@@ -65,8 +68,9 @@ final class Result
 
     /**
      * Returns an array of string reasons why the authentication attempt was unsuccessful
-     *
      * If authentication was successful, this method returns an empty array.
+     *
+     * @return array<int,string> $messages
      */
     public function getMessages(): array
     {

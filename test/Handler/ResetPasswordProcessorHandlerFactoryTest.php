@@ -16,10 +16,8 @@ class ResetPasswordProcessorHandlerFactoryTest extends TestCase
 {
     public function testFactoryWithTemplate(): void
     {
-        /** @var EventManagerInterface&MockObject $eventManager */
         $eventManager = $this->createMock(EventManagerInterface::class);
 
-        /** @var AdapterInterface&MockObject $adapter */
         $adapter = $this->createMock(AdapterInterface::class);
 
         $container = new InMemoryContainer();

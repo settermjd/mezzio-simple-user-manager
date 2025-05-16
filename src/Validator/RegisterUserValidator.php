@@ -13,12 +13,21 @@ use Laminas\Validator\EmailAddress;
 use Laminas\Validator\Identical;
 use Laminas\Validator\StringLength;
 
+/**
+ * @psalm-type ValidData = array{
+ *     first_name: string,
+ *     last_name: string,
+ *     email: string,
+ *     password: string
+ * }
+ * @extends InputFilter<ValidData>
+ */
 final class RegisterUserValidator extends InputFilter
 {
     public function __construct()
     {
         $firstName = new Input("first_name");
-        $firstName->allowEmpty();
+        $firstName->setAllowEmpty(true);
         $firstName->getValidatorChain()
             ->attach(new StringLength([
                 "max" => 50,
@@ -29,7 +38,7 @@ final class RegisterUserValidator extends InputFilter
             ->attach(new StripNewlines());
 
         $lastName = new Input("last_name");
-        $lastName->allowEmpty();
+        $lastName->setAllowEmpty(true);
         $lastName->getValidatorChain()
             ->attach(new StringLength([
                 "max" => 50,

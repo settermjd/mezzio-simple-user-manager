@@ -6,13 +6,13 @@ namespace SimpleUserManager\Handler;
 
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\EventManager\EventManagerInterface;
-use Laminas\InputFilter\InputFilterInterface;
 use Mezzio\Authentication\DefaultUser;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use SimpleUserManager\Service\ForgotPassword\Adapter\AdapterInterface;
 use SimpleUserManager\Service\ForgotPassword\Result;
+use SimpleUserManager\Validator\ForgotPasswordValidator;
 
 /**
  * This class ends a user's session
@@ -35,7 +35,7 @@ final readonly class ForgotPasswordProcessorHandler implements RequestHandlerInt
 
     public function __construct(
         private AdapterInterface $adapter,
-        private InputFilterInterface $inputFilter,
+        private ForgotPasswordValidator $inputFilter,
         private EventManagerInterface $eventManager
     ) {
     }

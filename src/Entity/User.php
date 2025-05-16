@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Settermjd\SimpleUserManager\Entity;
+namespace SimpleUserManager\Entity;
 
 use function get_object_vars;
 

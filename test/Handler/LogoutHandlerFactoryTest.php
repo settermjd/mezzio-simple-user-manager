@@ -14,7 +14,6 @@ class LogoutHandlerFactoryTest extends TestCase
 {
     public function testFactoryWithTemplate(): void
     {
-        /** @var AuthenticationService&MockObject $authService */
         $authService = $this->createMock(AuthenticationService::class);
 
         $container = new InMemoryContainer();

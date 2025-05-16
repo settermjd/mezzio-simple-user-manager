@@ -7,12 +7,12 @@ namespace SimpleUserManager\Handler;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\EventManager\EventManagerInterface;
 use Laminas\Hydrator\NamingStrategy\NamingStrategyInterface;
-use Laminas\InputFilter\InputFilterInterface;
 use Mezzio\Authentication\DefaultUser;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use SimpleUserManager\Service\RegisterUser\Adapter\AdapterInterface;
+use SimpleUserManager\Validator\RegisterUserValidator;
 
 /**
  * This class registers a user with an underlying data source
@@ -33,7 +33,7 @@ final readonly class RegisterUserProcessorHandler implements RequestHandlerInter
 
     public function __construct(
         private AdapterInterface $adapter,
-        private InputFilterInterface $inputFilter,
+        private RegisterUserValidator $inputFilter,
         private EventManagerInterface $eventManager,
         private NamingStrategyInterface $namingStrategy
     ) {

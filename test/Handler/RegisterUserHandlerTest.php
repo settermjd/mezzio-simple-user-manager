@@ -13,8 +13,7 @@ use SimpleUserManager\Handler\RegisterUserHandler;
 
 class RegisterUserHandlerTest extends TestCase
 {
-    /** @var TemplateRendererInterface&MockObject */
-    protected $templateRenderer;
+    protected TemplateRendererInterface&MockObject $templateRenderer;
 
     protected function setUp(): void
     {

@@ -6,11 +6,12 @@ namespace SimpleUserManager\Handler;
 
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\EventManager\EventManagerInterface;
-use Laminas\InputFilter\InputFilterInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use SimpleUserManager\Service\ResetPassword\Adapter\AdapterInterface;
+use SimpleUserManager\Service\ResetPassword\Result;
+use SimpleUserManager\Validator\ResetPasswordValidator;
 
 /**
  * This class ends a user's session
@@ -31,7 +32,7 @@ final readonly class ResetPasswordProcessorHandler implements RequestHandlerInte
 
     public function __construct(
         private AdapterInterface $adapter,
-        private InputFilterInterface $inputFilter,
+        private ResetPasswordValidator $inputFilter,
         private EventManagerInterface $eventManager
     ) {
     }
@@ -47,7 +48,7 @@ final readonly class ResetPasswordProcessorHandler implements RequestHandlerInte
             $this->adapter->resetPassword(
                 $this->inputFilter->getValue("email"),
                 $this->inputFilter->getValue("password"),
-            )
+            )->getCode() === Result::SUCCESS
         ) {
             $this->eventManager->trigger("reset-password-successful");
         }

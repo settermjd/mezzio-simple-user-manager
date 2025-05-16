@@ -15,6 +15,9 @@ class DbAdapterTest extends TestCase
 {
     use DbTestTrait;
 
+    /**
+     * @param array<string,string> $details
+     */
     #[TestWith([
         [
             'first_name' => 'matthew',

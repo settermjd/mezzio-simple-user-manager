@@ -57,6 +57,13 @@ class ConfigProvider
 
     /**
      * Returns the templates configuration
+     *
+     * @return array{
+     *     "paths": array{
+     *          "sum-app": array{literal-string&non-falsy-string},
+     *          "sum-layout": array{literal-string&non-falsy-string}
+     *     }
+     * }
      */
     public function getTemplates(): array
     {
@@ -71,7 +78,11 @@ class ConfigProvider
     /**
      * Returns the container dependencies
      *
-     * @psalm-return array<string, array<string, class-string>>
+     * @return array{
+     *     "invokables": array<class-string,class-string>,
+     *     "factories": array<class-string,class-string>,
+     *     "delegators": array<string,array<class-string>>,
+     * }
      */
     public function getDependencies(): array
     {
@@ -105,6 +116,14 @@ class ConfigProvider
         ];
     }
 
+    /**
+     * @return array<array{
+     *     "path": string,
+     *     "middleware": class-string,
+     *     "allowed_methods": array<string>,
+     *     "name"?: string,
+     * }>
+     */
     public function getRouteConfig(): array
     {
         return [

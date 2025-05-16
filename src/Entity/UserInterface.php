@@ -2,10 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Settermjd\SimpleUserManager\Entity;
+namespace SimpleUserManager\Entity;
 
 interface UserInterface
 {
+    /**
+     * @return array<mixed>
+     */
     public function toArray(): array;
 
     public function getId(): int|null;

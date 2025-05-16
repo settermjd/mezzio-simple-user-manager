@@ -6,17 +6,15 @@ namespace SimpleUserManagerTest\Handler;
 
 use Laminas\Authentication\AuthenticationService;
 use Laminas\Diactoros\Response\RedirectResponse;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use SimpleUserManager\Handler\LogoutHandler;
 
 class LogoutHandlerTest extends TestCase
 {
-    public function testRedirectsToDefaultRouteAfterLogout()
+    public function testRedirectsToDefaultRouteAfterLogout(): void
     {
-        $handler = new LogoutHandler($this->createStub(AuthenticationService::class));
-        /** @var ServerRequestInterface&MockObject $request */
+        $handler  = new LogoutHandler($this->createStub(AuthenticationService::class));
         $request  = $this->createMock(ServerRequestInterface::class);
         $response = $handler->handle($request);
 

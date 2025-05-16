@@ -14,7 +14,7 @@ use SimpleUserManager\Service\ResetPassword\Adapter\DefaultAdapterFactory;
 
 class DefaultAdapterFactoryTest extends TestCase
 {
-    public function testCanInstantiateAdapterFactory()
+    public function testCanInstantiateAdapterFactory(): void
     {
         /** @var AdapterInterface&Adapter&MockObject $dbAdapter */
         $dbAdapter = $this->createMock(AdapterInterface::class);

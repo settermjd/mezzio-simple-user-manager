@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Settermjd\SimpleUserManager\Entity;
+namespace SimpleUserManager\Entity;
 
 trait AuthenticatableUserTrait
 {

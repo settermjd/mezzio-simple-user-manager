@@ -17,6 +17,12 @@ use Laminas\Validator\StringLength;
  * This class provides input validation and filtering for the reset password
  * process. It ensures that the password provided meets the validation
  * requirements and doesn't contain extraneous, malicious data.
+ *
+ * @psalm-type ValidData = array{
+ *     email: string,
+ *     password: string
+ * }
+ * @extends InputFilter<ValidData>
  */
 final class ResetPasswordValidator extends InputFilter
 {
