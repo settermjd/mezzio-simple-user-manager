@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+namespace SimpleUserManagerSeederTest;
+
+use DateInterval;
+use DateTime;
 use Phinx\Seed\AbstractSeed;
 
 class PasswordResetsSeeder extends AbstractSeed
@@ -19,10 +23,10 @@ class PasswordResetsSeeder extends AbstractSeed
         $sixDays = (new DateTime())
             ->sub(new DateInterval("P6D"))
             ->format("Y-m-d");
-        $oneDay = (new DateTime())
+        $oneDay  = (new DateTime())
             ->sub(new DateInterval("P1D"))
             ->format("Y-m-d");
-        $data  = [
+        $data    = [
             [
                 'user_identity' => 'matthew@example.org',
                 'created_at'    => $sixDays,

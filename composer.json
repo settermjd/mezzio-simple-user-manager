@@ -19,7 +19,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "SimpleUserManagerTest\\": "test/"
+            "SimpleUserManagerTest\\": "test/",
+            "SimpleUserManagerSeederTest\\": "db/seeds/"
         }
     },
     "require": {
