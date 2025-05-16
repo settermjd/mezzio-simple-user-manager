@@ -54,7 +54,7 @@
         ],
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
-        "static-analysis": "phpstan analyse --level=2 src test",
+        "static-analysis": "phpstan analyse --level=6 src test",
         "test": "phpunit --colors=always",
         "test-with-coverage": "XDEBUG_MODE=coverage phpunit --colors=always --coverage-html test/_coverage",
         "test-docs": "vale README.md",
