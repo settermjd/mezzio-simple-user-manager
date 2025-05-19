@@ -2,9 +2,6 @@
 
 declare(strict_types=1);
 
-
-use DateInterval;
-use DateTime;
 use Phinx\Seed\AbstractSeed;
 
 class PasswordResetsSeeder extends AbstractSeed
