@@ -42,6 +42,8 @@ class DbAdapterTest extends TestCase
     ])]
     public function testCanRegisterUserAndHandleExceptions(array $details, int $code): void
     {
+        $this->setUpDatabase();
+
         $middlewareAdapter = new DbAdapter(adapter: $this->getDbAdapter());
         $result            = $middlewareAdapter->registerUser(
             new DefaultUser(
