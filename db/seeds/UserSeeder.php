@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace SimpleUserManagerSeederTest;
-
 use Phinx\Seed\AbstractSeed;
 
 class UserSeeder extends AbstractSeed

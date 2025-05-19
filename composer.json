@@ -19,9 +19,12 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "SimpleUserManagerTest\\": "test/",
-            "SimpleUserManagerSeederTest\\": "db/seeds/"
-        }
+            "SimpleUserManagerTest\\": "test/"
+        },
+        "classmap": [
+            "db/seeds/PasswordResetsSeeder.php",
+            "db/seeds/UserSeeder.php"
+        ]
     },
     "require": {
         "gsteel/dot": "^1.7",

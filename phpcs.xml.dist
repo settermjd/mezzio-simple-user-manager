@@ -29,4 +29,8 @@
         <exclude-pattern>/test/MigrateMiddlewareToRequestHandler/MigrateMiddlewareToRequestHandlerCommandTest.php</exclude-pattern>
         <exclude-pattern>/test/MigrateMiddlewareToRequestHandler/ProjectSetupTrait.php</exclude-pattern>
     </rule>
+    <rule ref="PSR1.Classes.ClassDeclaration">
+        <exclude-pattern>db/seeds/PasswordResetsSeeder.php</exclude-pattern>
+        <exclude-pattern>db/seeds/UserSeeder.php</exclude-pattern>
+    </rule>
 </ruleset>

@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace SimpleUserManagerTest\Service;
 
 use Laminas\Db\Adapter\Adapter;
+use PasswordResetsSeeder;
 use Phinx\Console\PhinxApplication;
 use Phinx\Wrapper\TextWrapper;
-use SimpleUserManagerSeederTest\PasswordResetsSeeder;
-use SimpleUserManagerSeederTest\UserSeeder;
 use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\NullOutput;
+use UserSeeder;
 
 trait DbTestTrait
 {
