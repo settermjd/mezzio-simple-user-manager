@@ -3,3 +3,5 @@
 
 # Ignore the PHPUnit code coverage directory
 test/_coverage
+development_db.sqlite3
+test/database.sqlite3
