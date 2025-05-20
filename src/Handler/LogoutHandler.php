@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleUserManager\Handler;
 
-use Laminas\Authentication\AuthenticationService;
+use Laminas\Authentication\AuthenticationServiceInterface;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -25,7 +25,7 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 final readonly class LogoutHandler implements RequestHandlerInterface
 {
-    public function __construct(private AuthenticationService $auth)
+    public function __construct(private AuthenticationServiceInterface|null $auth = null)
     {
     }
 
@@ -34,6 +34,10 @@ final readonly class LogoutHandler implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        if ($this->auth === null) {
+            return new RedirectResponse('/login');
+        }
+
         $this->auth->clearIdentity();
 
         return new RedirectResponse('/');
