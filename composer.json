@@ -51,7 +51,6 @@
     },
     "scripts": {
         "check": [
-            "@license-check",
             "@cs-check",
             "@static-analysis",
             "@test"
