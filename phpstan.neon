@@ -1,0 +1,9 @@
+parameters:
+	level: 7
+	paths:
+		- src
+		- test
+	excludePaths:
+	    analyseAndScan:
+	        - src/Entity/ResetPassword/ResetActive.php
+	        - src/Service/RegisterUser/RegisterUserService.php
