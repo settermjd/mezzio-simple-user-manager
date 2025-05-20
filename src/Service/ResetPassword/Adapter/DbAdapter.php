@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleUserManager\Service\ResetPassword\Adapter;
 
+use Iterator;
 use Laminas\Db\Adapter\Adapter;
 use Laminas\Db\Adapter\AdapterInterface as DbAdapterInterface;
 use Laminas\Db\ResultSet\HydratingResultSet;
@@ -14,6 +15,8 @@ use Laminas\Hydrator\NamingStrategy\UnderscoreNamingStrategy;
 use Laminas\Hydrator\ReflectionHydrator;
 use SimpleUserManager\Entity\ResetPassword\ResetActive;
 use SimpleUserManager\Service\ResetPassword\Result;
+
+use function assert;
 
 /**
  * This class uses laminas-db to insert a record in a table in the database
@@ -92,6 +95,8 @@ final readonly class DbAdapter implements AdapterInterface
             Adapter::QUERY_MODE_EXECUTE,
             new HydratingResultSet($hydrator, new ResetActive())
         );
+
+        assert($results instanceof Iterator);
 
         /** @var ResetActive $result */
         $result = $results->current();
