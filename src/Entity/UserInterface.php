@@ -16,4 +16,10 @@ interface UserInterface
     public function getEmailAddress(): string|null;
 
     public function getFirstName(): string|null;
+
+    public function getLastName(): string|null;
+
+    public function getFullname(): string;
+
+    public function getPhone(): string|null;
 }
