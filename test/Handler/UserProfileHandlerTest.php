@@ -32,7 +32,6 @@ class UserProfileHandlerTest extends TestCase
         $handler = new UserProfileHandler($this->templateRenderer);
 
         $response = $handler->handle(
-            /** @param ServerRequestInterface&MockeObject */
             $this->createMock(ServerRequestInterface::class)
         );
 

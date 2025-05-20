@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleUserManagerTest\Service\ResetPassword\Adapter;
 
-use Laminas\Db\Adapter\Adapter;
 use Laminas\Db\Adapter\AdapterInterface;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use SimpleUserManager\Service\ResetPassword\Adapter\DbAdapter;
@@ -16,10 +14,8 @@ class DefaultAdapterFactoryTest extends TestCase
 {
     public function testCanInstantiateAdapterFactory(): void
     {
-        /** @var AdapterInterface&Adapter&MockObject $dbAdapter */
         $dbAdapter = $this->createMock(AdapterInterface::class);
 
-        /** @var ContainerInterface&MockObject $container */
         $container = $this->createMock(ContainerInterface::class);
         $container
             ->expects($this->atMost(2))

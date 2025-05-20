@@ -31,7 +31,6 @@ class RegisterUserHandlerTest extends TestCase
         $handler = new RegisterUserHandler($this->templateRenderer);
 
         $response = $handler->handle(
-            /** @param ServerRequestInterface&MockeObject */
             $this->createMock(ServerRequestInterface::class)
         );
 

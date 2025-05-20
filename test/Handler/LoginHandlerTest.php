@@ -13,8 +13,7 @@ use SimpleUserManager\Handler\LoginHandler;
 
 class LoginHandlerTest extends TestCase
 {
-    /** @var TemplateRendererInterface&MockObject */
-    protected $templateRenderer;
+    protected TemplateRendererInterface&MockObject $templateRenderer;
 
     protected function setUp(): void
     {
@@ -32,7 +31,6 @@ class LoginHandlerTest extends TestCase
         $handler = new LoginHandler($this->templateRenderer);
 
         $response = $handler->handle(
-            /** @param ServerRequestInterface&MockeObject */
             $this->createMock(ServerRequestInterface::class)
         );
 

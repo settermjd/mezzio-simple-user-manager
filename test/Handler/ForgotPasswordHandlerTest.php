@@ -13,8 +13,7 @@ use SimpleUserManager\Handler\ForgotPasswordHandler;
 
 class ForgotPasswordHandlerTest extends TestCase
 {
-    /** @var TemplateRendererInterface&MockObject */
-    protected $templateRenderer;
+    protected TemplateRendererInterface&MockObject $templateRenderer;
 
     protected function setUp(): void
     {
@@ -32,7 +31,6 @@ class ForgotPasswordHandlerTest extends TestCase
         $handler = new ForgotPasswordHandler($this->templateRenderer);
 
         $response = $handler->handle(
-            /** @param ServerRequestInterface&MockeObject */
             $this->createMock(ServerRequestInterface::class)
         );
 

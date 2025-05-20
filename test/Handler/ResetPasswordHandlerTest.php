@@ -13,8 +13,7 @@ use SimpleUserManager\Handler\ResetPasswordHandler;
 
 class ResetPasswordHandlerTest extends TestCase
 {
-    /** @var TemplateRendererInterface&MockObject */
-    protected $templateRenderer;
+    protected TemplateRendererInterface&MockObject $templateRenderer;
 
     protected function setUp(): void
     {
@@ -32,7 +31,6 @@ class ResetPasswordHandlerTest extends TestCase
         $handler = new ResetPasswordHandler($this->templateRenderer);
 
         $response = $handler->handle(
-            /** @param ServerRequestInterface&MockeObject */
             $this->createMock(ServerRequestInterface::class)
         );
 
