@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleUserManagerTest\Handler;
 
+use Laminas\Authentication\AuthenticationServiceInterface;
 use Mezzio\Template\TemplateRendererInterface;
 use PHPUnit\Framework\TestCase;
 use SimpleUserManager\Handler\UserProfileHandler;
@@ -18,6 +19,10 @@ class UserProfileHandlerFactoryTest extends TestCase
         $container->setService(
             TemplateRendererInterface::class,
             $this->createMock(TemplateRendererInterface::class)
+        );
+        $container->setService(
+            AuthenticationServiceInterface::class,
+            $this->createMock(AuthenticationServiceInterface::class),
         );
 
         $factory = new UserProfileHandlerFactory();
