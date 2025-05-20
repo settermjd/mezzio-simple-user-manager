@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace SimpleUserManagerTest\Handler;
 
 use Laminas\Diactoros\Response\RedirectResponse;
-use Laminas\EventManager\EventManagerInterface;
-use Laminas\Hydrator\NamingStrategy\MapNamingStrategy;
 use Mezzio\Authentication\DefaultUser;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Log\LoggerInterface;
 use SimpleUserManager\Handler\RegisterUserProcessorHandler;
 use SimpleUserManager\Service\RegisterUser\Adapter\AdapterInterface;
 use SimpleUserManager\Service\RegisterUser\Result;
@@ -28,23 +27,7 @@ class RegisterUserProcessorHandlerTest extends TestCase
 
     public function testRedirectsWhenInputIsNotValid(): void
     {
-        $eventManager = $this->createMock(EventManagerInterface::class);
-
-        $namingStrategy = MapNamingStrategy::createFromHydrationMap(
-            [
-                'email'      => 'email',
-                'password'   => 'password',
-                'first_name' => 'firstName',
-                'last_name'  => 'lastName',
-            ]
-        );
-
-        $handler = new RegisterUserProcessorHandler(
-            $this->adapter,
-            new RegisterUserValidator(),
-            $eventManager,
-            $namingStrategy
-        );
+        $handler = new RegisterUserProcessorHandler($this->adapter, new RegisterUserValidator());
 
         $request = $this->createMock(ServerRequestInterface::class);
         $request
@@ -81,23 +64,7 @@ class RegisterUserProcessorHandlerTest extends TestCase
             ->with($user)
             ->willReturn(new Result(code: Result::SUCCESS));
 
-        $eventManager = $this->createMock(EventManagerInterface::class);
-
-        $namingStrategy = MapNamingStrategy::createFromHydrationMap(
-            [
-                'email'      => 'email',
-                'password'   => 'password',
-                'first_name' => 'firstName',
-                'last_name'  => 'lastName',
-            ]
-        );
-
-        $handler = new RegisterUserProcessorHandler(
-            $this->adapter,
-            new RegisterUserValidator(),
-            $eventManager,
-            $namingStrategy
-        );
+        $handler = new RegisterUserProcessorHandler($this->adapter, new RegisterUserValidator());
 
         $request = $this->createMock(ServerRequestInterface::class);
         $request
@@ -114,5 +81,33 @@ class RegisterUserProcessorHandlerTest extends TestCase
         $response = $handler->handle($request);
 
         self::assertInstanceOf(ResponseInterface::class, $response);
+    }
+
+    public function testCanHandleParsedBodyIsNull(): void
+    {
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger
+            ->expects($this->once())
+            ->method("warning")
+            ->with("Could not process register user request", [
+                'Reason' => 'Request body was null',
+            ]);
+
+        $handler = new RegisterUserProcessorHandler(
+            $this->adapter,
+            new RegisterUserValidator(),
+            $logger,
+        );
+
+        $request = $this->createMock(ServerRequestInterface::class);
+        $request
+            ->expects($this->once())
+            ->method("getParsedBody")
+            ->willReturn(null);
+
+        $response = $handler->handle($request);
+
+        self::assertInstanceOf(RedirectResponse::class, $response);
+        self::assertSame(RegisterUserProcessorHandler::ROUTE_NAME_REGISTER_USER, $response->getHeaderLine("Location"));
     }
 }

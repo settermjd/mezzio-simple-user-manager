@@ -5,14 +5,16 @@ declare(strict_types=1);
 namespace SimpleUserManager\Handler;
 
 use Laminas\Diactoros\Response\RedirectResponse;
-use Laminas\EventManager\EventManagerInterface;
-use Laminas\Hydrator\NamingStrategy\NamingStrategyInterface;
 use Mezzio\Authentication\DefaultUser;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Psr\Log\LoggerInterface;
 use SimpleUserManager\Service\RegisterUser\Adapter\AdapterInterface;
 use SimpleUserManager\Validator\RegisterUserValidator;
+
+use function assert;
+use function is_array;
 
 /**
  * This class registers a user with an underlying data source
@@ -34,17 +36,25 @@ final readonly class RegisterUserProcessorHandler implements RequestHandlerInter
     public function __construct(
         private AdapterInterface $adapter,
         private RegisterUserValidator $inputFilter,
-        private EventManagerInterface $eventManager,
-        private NamingStrategyInterface $namingStrategy
+        private LoggerInterface|null $logger = null,
     ) {
     }
 
     /**
-     * process registers a new user with the underlying data source
+     * The method registers a new user with the underlying data source
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $this->inputFilter->setData($request->getParsedBody());
+        $parsedBody = $request->getParsedBody();
+        if ($parsedBody === null) {
+            $this->logger->warning("Could not process register user request", [
+                'Reason' => 'Request body was null',
+            ]);
+            return new RedirectResponse(self::ROUTE_NAME_REGISTER_USER);
+        }
+        assert(is_array($parsedBody));
+
+        $this->inputFilter->setData($parsedBody);
         if (! $this->inputFilter->isValid()) {
             return new RedirectResponse(self::ROUTE_NAME_REGISTER_USER);
         }

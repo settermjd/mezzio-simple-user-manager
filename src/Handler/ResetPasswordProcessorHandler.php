@@ -9,9 +9,13 @@ use Laminas\EventManager\EventManagerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Psr\Log\LoggerInterface;
 use SimpleUserManager\Service\ResetPassword\Adapter\AdapterInterface;
 use SimpleUserManager\Service\ResetPassword\Result;
 use SimpleUserManager\Validator\ResetPasswordValidator;
+
+use function assert;
+use function is_array;
 
 /**
  * This class ends a user's session
@@ -33,13 +37,23 @@ final readonly class ResetPasswordProcessorHandler implements RequestHandlerInte
     public function __construct(
         private AdapterInterface $adapter,
         private ResetPasswordValidator $inputFilter,
-        private EventManagerInterface $eventManager
+        private EventManagerInterface $eventManager,
+        private LoggerInterface|null $logger = null,
     ) {
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $this->inputFilter->setData($request->getParsedBody());
+        $parsedBody = $request->getParsedBody();
+        if ($parsedBody === null) {
+            $this->logger->warning("Could not process register user request", [
+                'Reason' => 'Request body was null',
+            ]);
+            return new RedirectResponse(self::ROUTE_NAME_RESET_PASSWORD);
+        }
+        assert(is_array($parsedBody));
+
+        $this->inputFilter->setData($parsedBody);
         if (! $this->inputFilter->isValid()) {
             return new RedirectResponse(self::ROUTE_NAME_RESET_PASSWORD);
         }

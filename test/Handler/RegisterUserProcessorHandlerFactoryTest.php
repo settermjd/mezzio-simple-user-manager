@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace SimpleUserManagerTest\Handler;
 
-use Laminas\EventManager\EventManagerInterface;
-use Laminas\Hydrator\NamingStrategy\NamingStrategyInterface;
+use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 use SimpleUserManager\Handler\RegisterUserProcessorHandler;
 use SimpleUserManager\Handler\RegisterUserProcessorHandlerFactory;
 use SimpleUserManager\Service\RegisterUser\Adapter\AdapterInterface;
@@ -15,29 +15,22 @@ use SimpleUserManagerTest\InMemoryContainer;
 
 class RegisterUserProcessorHandlerFactoryTest extends TestCase
 {
-    public function testFactoryWithTemplate(): void
+    #[TestWith([true])]
+    #[TestWith([false])]
+    public function testFactoryWithTemplate(bool $hasLogger): void
     {
         $container = new InMemoryContainer();
         $container->setService(
             AdapterInterface::class,
-            /** @param AdapterInterface&MockObject */
             $this->createMock(AdapterInterface::class)
         );
         $container->setService(
             RegisterUserValidator::class,
-            /** @param RegisterUserValidator&MockObject */
             new RegisterUserValidator()
         );
-        $container->setService(
-            EventManagerInterface::class,
-            /** @param EventManagerInterface&MockObject */
-            $this->createMock(EventManagerInterface::class)
-        );
-        $container->setService(
-            NamingStrategyInterface::class,
-            /** @param NamingStrategyInterface&MockObject */
-            $this->createMock(NamingStrategyInterface::class)
-        );
+        if ($hasLogger) {
+            $container->setService(LoggerInterface::class, $logger = $this->createMock(LoggerInterface::class));
+        }
 
         $factory = new RegisterUserProcessorHandlerFactory();
         $handler = $factory($container);

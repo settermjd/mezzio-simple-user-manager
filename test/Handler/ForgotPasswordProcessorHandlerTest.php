@@ -11,6 +11,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Log\LoggerInterface;
 use SimpleUserManager\Handler\ForgotPasswordProcessorHandler;
 use SimpleUserManager\Service\ForgotPassword\Adapter\AdapterInterface;
 use SimpleUserManager\Service\ForgotPassword\Result;
@@ -118,6 +119,39 @@ class ForgotPasswordProcessorHandlerTest extends TestCase
             ->willReturn([
                 "email" => $userIdentity,
             ]);
+
+        $response = $handler->handle($request);
+
+        self::assertInstanceOf(RedirectResponse::class, $response);
+        self::assertSame(
+            $response->getHeaderLine("Location"),
+            ForgotPasswordProcessorHandler::ROUTE_NAME_FORGOT_PASSWORD
+        );
+    }
+
+    public function testCanHandleParsedBodyIsNull(): void
+    {
+        $inputFilter = $this->createMock(ForgotPasswordValidator::class);
+        $inputFilter
+            ->expects($this->never())
+            ->method("isValid");
+
+        $eventManager = $this->createMock(EventManagerInterface::class);
+        $logger       = $this->createMock(LoggerInterface::class);
+        $logger
+            ->expects($this->once())
+            ->method("warning")
+            ->with("Could not process forgot password request", [
+                'Reason' => 'Request body was null',
+            ]);
+
+        $handler = new ForgotPasswordProcessorHandler($this->adapter, $inputFilter, $eventManager, $logger);
+
+        $request = $this->createMock(ServerRequestInterface::class);
+        $request
+            ->expects($this->once())
+            ->method("getParsedBody")
+            ->willReturn(null);
 
         $response = $handler->handle($request);
 

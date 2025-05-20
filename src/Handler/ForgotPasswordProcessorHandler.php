@@ -10,9 +10,13 @@ use Mezzio\Authentication\DefaultUser;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Psr\Log\LoggerInterface;
 use SimpleUserManager\Service\ForgotPassword\Adapter\AdapterInterface;
 use SimpleUserManager\Service\ForgotPassword\Result;
 use SimpleUserManager\Validator\ForgotPasswordValidator;
+
+use function assert;
+use function is_array;
 
 /**
  * This class ends a user's session
@@ -36,7 +40,8 @@ final readonly class ForgotPasswordProcessorHandler implements RequestHandlerInt
     public function __construct(
         private AdapterInterface $adapter,
         private ForgotPasswordValidator $inputFilter,
-        private EventManagerInterface $eventManager
+        private EventManagerInterface $eventManager,
+        private LoggerInterface|null $logger = null
     ) {
     }
 
@@ -46,7 +51,17 @@ final readonly class ForgotPasswordProcessorHandler implements RequestHandlerInt
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $this->inputFilter->setData($request->getParsedBody());
+        $parsedBody = $request->getParsedBody();
+        if ($parsedBody === null) {
+            $this->logger?->warning("Could not process forgot password request", [
+                'Reason' => 'Request body was null',
+            ]);
+            return new RedirectResponse(self::ROUTE_NAME_FORGOT_PASSWORD);
+        }
+
+        assert(is_array($parsedBody));
+
+        $this->inputFilter->setData($parsedBody);
         if (! $this->inputFilter->isValid()) {
             return new RedirectResponse(self::ROUTE_NAME_FORGOT_PASSWORD);
         }
