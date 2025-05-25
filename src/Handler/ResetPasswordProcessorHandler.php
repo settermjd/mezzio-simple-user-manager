@@ -46,7 +46,7 @@ final readonly class ResetPasswordProcessorHandler implements RequestHandlerInte
     {
         $parsedBody = $request->getParsedBody();
         if ($parsedBody === null) {
-            $this->logger->warning("Could not process register user request", [
+            $this->logger?->warning("Could not process register user request", [
                 'Reason' => 'Request body was null',
             ]);
             return new RedirectResponse(self::ROUTE_NAME_RESET_PASSWORD);

@@ -30,9 +30,8 @@ class ForgotPasswordHandlerTest extends TestCase
 
         $handler = new ForgotPasswordHandler($this->templateRenderer);
 
-        $response = $handler->handle(
-            $this->createMock(ServerRequestInterface::class)
-        );
+        $request  = $this->createMock(ServerRequestInterface::class);
+        $response = $handler->handle($request);
 
         self::assertInstanceOf(HtmlResponse::class, $response);
     }
