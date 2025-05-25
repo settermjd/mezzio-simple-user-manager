@@ -37,6 +37,13 @@
         "mezzio/mezzio-authentication-laminasauthentication": "^1.7"
     },
     "require-dev": {
+        "ext-dom": "*",
+        "ext-json": "*",
+        "ext-libxml": "*",
+        "ext-mbstring": "*",
+        "ext-tokenizer": "*",
+        "ext-xml": "*",
+        "ext-xmlwriter": "*",
         "friendsofphp/php-cs-fixer": "^3.64",
         "laminas/laminas-coding-standard": "^3.0",
         "laminas/laminas-component-installer": "^3.5",
