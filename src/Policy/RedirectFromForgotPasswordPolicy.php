@@ -6,12 +6,19 @@ namespace SimpleUserManager\Policy;
 
 use Laminas\Authentication\AuthenticationServiceInterface;
 
+/**
+ * This class handles redirections from the application's ForgotPassword route.
+ *
+ * A redirect is required if there is already a logged-in user when a request
+ * to the forgot password route is made.
+ */
 readonly class RedirectFromForgotPasswordPolicy implements RoutePolicyInterface
 {
     public function __construct(
         private AuthenticationServiceInterface $authService,
-        private string $redirectToURI
-    ) {}
+        private string $redirectToUri
+    ) {
+    }
 
     /**
      * @inheritDoc
@@ -29,6 +36,6 @@ readonly class RedirectFromForgotPasswordPolicy implements RoutePolicyInterface
      */
     public function getRedirectURI(): string
     {
-        return $this->redirectToURI;
+        return $this->redirectToUri;
     }
 }
