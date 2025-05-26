@@ -15,13 +15,13 @@ readonly class RedirectFromForgotPasswordPolicy implements RoutePolicyInterface
 
     /**
      * @inheritDoc
-     * 
+     *
      * If a request is made to the forgot password route and a user identity is
      * available, then a redirect to a different URI must happen.
      */
     public function mustRedirect(): bool
     {
-        return $this->authService->hasIdentity();
+        return $this->authService->hasIdentity() && $this->redirectToUri !== '';
     }
 
     /**
