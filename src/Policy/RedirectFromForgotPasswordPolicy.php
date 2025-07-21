@@ -12,7 +12,7 @@ use Laminas\Authentication\AuthenticationServiceInterface;
  * A redirect is required if there is already a logged-in user when a request
  * to the forgot password route is made.
  */
-readonly class RedirectFromForgotPasswordPolicy implements RoutePolicyInterface
+final readonly class RedirectFromForgotPasswordPolicy implements RoutePolicyInterface
 {
     public function __construct(
         private AuthenticationServiceInterface $authService,
