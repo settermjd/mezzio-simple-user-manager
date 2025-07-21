@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace SimpleUserManager;
 
+use Laminas\Authentication\AuthenticationServiceInterface;
 use Laminas\Db\Adapter\AdapterInterface;
 use Laminas\Db\Adapter\AdapterServiceFactory;
 use Laminas\EventManager\EventManagerInterface;
 use Mezzio\Application;
 use Mezzio\Authentication\AuthenticationMiddleware;
 use Mezzio\Container\ApplicationConfigInjectionDelegator;
+use Psr\Container\ContainerInterface;
 use SimpleUserManager\Factory\EventManagerFactory;
 use SimpleUserManager\Handler\ForgotPasswordHandler;
 use SimpleUserManager\Handler\ForgotPasswordHandlerFactory;
@@ -29,6 +31,9 @@ use SimpleUserManager\Handler\ResetPasswordProcessorHandler;
 use SimpleUserManager\Handler\ResetPasswordProcessorHandlerFactory;
 use SimpleUserManager\Handler\UserProfileHandler;
 use SimpleUserManager\Handler\UserProfileHandlerFactory;
+use SimpleUserManager\Middleware\RoutePolicyMiddleware;
+use SimpleUserManager\Policy\NullRedirectPolicy;
+use SimpleUserManager\Policy\RedirectFromForgotPasswordPolicy;
 use SimpleUserManager\Service\ForgotPassword\Adapter\AdapterInterface as FPAdapterInterface;
 use SimpleUserManager\Service\ForgotPassword\Adapter\DefaultAdapterFactory as FPDefaultAdapterFactory;
 use SimpleUserManager\Service\RegisterUser\Adapter\AdapterInterface as RUAdapterInterface;
@@ -89,24 +94,35 @@ class ConfigProvider
         return [
             'invokables' => [
                 ForgotPasswordValidator::class => ForgotPasswordValidator::class,
+                NullRedirectPolicy::class      => NullRedirectPolicy::class,
                 RegisterUserValidator::class   => RegisterUserValidator::class,
                 ResetPasswordValidator::class  => ResetPasswordValidator::class,
             ],
             'factories'  => [
-                AdapterInterface::class               => AdapterServiceFactory::class,
-                EventManagerInterface::class          => EventManagerFactory::class,
-                ForgotPasswordHandler::class          => ForgotPasswordHandlerFactory::class,
-                ForgotPasswordProcessorHandler::class => ForgotPasswordProcessorHandlerFactory::class,
-                LoginHandler::class                   => LoginHandlerFactory::class,
-                LogoutHandler::class                  => LogoutHandlerFactory::class,
-                RegisterUserHandler::class            => RegisterUserHandlerFactory::class,
-                RegisterUserProcessorHandler::class   => RegisterUserProcessorHandlerFactory::class,
-                ResetPasswordHandler::class           => ResetPasswordHandlerFactory::class,
-                ResetPasswordProcessorHandler::class  => ResetPasswordProcessorHandlerFactory::class,
-                UserProfileHandler::class             => UserProfileHandlerFactory::class,
-                FPAdapterInterface::class             => FPDefaultAdapterFactory::class,
-                RUAdapterInterface::class             => RUDefaultAdapterFactory::class,
-                RPAdapterInterface::class             => RPDefaultAdapterFactory::class,
+                AdapterInterface::class                 => AdapterServiceFactory::class,
+                EventManagerInterface::class            => EventManagerFactory::class,
+                RedirectFromForgotPasswordPolicy::class => new class
+                {
+                    public function __invoke(ContainerInterface $container): RedirectFromForgotPasswordPolicy
+                    {
+                        return new RedirectFromForgotPasswordPolicy(
+                            $container->get(AuthenticationServiceInterface::class),
+                            '/forgot-password'
+                        );
+                    }
+                },
+                ForgotPasswordHandler::class            => ForgotPasswordHandlerFactory::class,
+                ForgotPasswordProcessorHandler::class   => ForgotPasswordProcessorHandlerFactory::class,
+                LoginHandler::class                     => LoginHandlerFactory::class,
+                LogoutHandler::class                    => LogoutHandlerFactory::class,
+                RegisterUserHandler::class              => RegisterUserHandlerFactory::class,
+                RegisterUserProcessorHandler::class     => RegisterUserProcessorHandlerFactory::class,
+                ResetPasswordHandler::class             => ResetPasswordHandlerFactory::class,
+                ResetPasswordProcessorHandler::class    => ResetPasswordProcessorHandlerFactory::class,
+                UserProfileHandler::class               => UserProfileHandlerFactory::class,
+                FPAdapterInterface::class               => FPDefaultAdapterFactory::class,
+                RUAdapterInterface::class               => RUDefaultAdapterFactory::class,
+                RPAdapterInterface::class               => RPDefaultAdapterFactory::class,
             ],
             'delegators' => [
                 Application::class => [
@@ -119,7 +135,7 @@ class ConfigProvider
     /**
      * @return array<array{
      *     "path": string,
-     *     "middleware": class-string,
+     *     "middleware": class-string|array<class-string>,
      *     "allowed_methods": array<string>,
      *     "name"?: string,
      * }>
@@ -129,22 +145,34 @@ class ConfigProvider
         return [
             [
                 'path'            => '/forgot-password',
-                'middleware'      => ForgotPasswordHandler::class,
+                'middleware'      => [
+                    RoutePolicyMiddleware::class,
+                    ForgotPasswordHandler::class,
+                ],
                 'allowed_methods' => ['GET'],
             ],
             [
                 'path'            => '/forgot-password',
-                'middleware'      => ForgotPasswordProcessorHandler::class,
+                'middleware'      => [
+                    RoutePolicyMiddleware::class,
+                    ForgotPasswordProcessorHandler::class,
+                ],
                 'allowed_methods' => ['POST'],
             ],
             [
                 'path'            => '/reset-password',
-                'middleware'      => ResetPasswordHandler::class,
+                'middleware'      => [
+                    RoutePolicyMiddleware::class,
+                    ResetPasswordHandler::class,
+                ],
                 'allowed_methods' => ['GET'],
             ],
             [
                 'path'            => '/reset-password',
-                'middleware'      => ResetPasswordProcessorHandler::class,
+                'middleware'      => [
+                    RoutePolicyMiddleware::class,
+                    ResetPasswordProcessorHandler::class,
+                ],
                 'allowed_methods' => ['POST'],
             ],
             [
@@ -164,17 +192,26 @@ class ConfigProvider
             ],
             [
                 'path'            => '/register',
-                'middleware'      => RegisterUserHandler::class,
+                'middleware'      => [
+                    RoutePolicyMiddleware::class,
+                    RegisterUserHandler::class,
+                ],
                 'allowed_methods' => ['GET'],
             ],
             [
                 'path'            => '/register',
-                'middleware'      => RegisterUserProcessorHandler::class,
+                'middleware'      => [
+                    RoutePolicyMiddleware::class,
+                    RegisterUserProcessorHandler::class,
+                ],
                 'allowed_methods' => ['POST'],
             ],
             [
                 'path'            => '/user/profile',
-                'middleware'      => UserProfileHandler::class,
+                'middleware'      => [
+                    RoutePolicyMiddleware::class,
+                    UserProfileHandler::class,
+                ],
                 'allowed_methods' => ['GET'],
             ],
         ];

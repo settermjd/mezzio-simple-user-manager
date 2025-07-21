@@ -25,4 +25,9 @@ readonly class RoutePolicyMiddleware implements MiddlewareInterface
 
         return $handler->handle($request);
     }
+
+    public function getRoutePolicy(): RoutePolicyInterface
+    {
+        return $this->routePolicy;
+    }
 }
