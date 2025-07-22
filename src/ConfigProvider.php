@@ -32,6 +32,7 @@ use SimpleUserManager\Handler\ResetPasswordProcessorHandlerFactory;
 use SimpleUserManager\Handler\UserProfileHandler;
 use SimpleUserManager\Handler\UserProfileHandlerFactory;
 use SimpleUserManager\Middleware\RoutePolicyMiddleware;
+use SimpleUserManager\Middleware\RoutePolicyMiddlewareFactory;
 use SimpleUserManager\Policy\NullRedirectPolicy;
 use SimpleUserManager\Policy\RedirectFromForgotPasswordPolicy;
 use SimpleUserManager\Service\ForgotPassword\Adapter\AdapterInterface as FPAdapterInterface;
@@ -123,6 +124,7 @@ class ConfigProvider
                 FPAdapterInterface::class               => FPDefaultAdapterFactory::class,
                 RUAdapterInterface::class               => RUDefaultAdapterFactory::class,
                 RPAdapterInterface::class               => RPDefaultAdapterFactory::class,
+                RoutePolicyMiddleware::class            => RoutePolicyMiddlewareFactory::class,
             ],
             'delegators' => [
                 Application::class => [
