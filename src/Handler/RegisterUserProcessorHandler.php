@@ -31,7 +31,7 @@ use function is_array;
  */
 final readonly class RegisterUserProcessorHandler implements RequestHandlerInterface
 {
-    public const string ROUTE_NAME_REGISTER_USER = "/user/register";
+    public const string ROUTE_NAME_REGISTER_USER = "/register";
 
     public function __construct(
         private AdapterInterface $adapter,
