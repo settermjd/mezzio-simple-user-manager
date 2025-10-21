@@ -1,0 +1,24 @@
+<h1>Log In</h1>
+
+<form method="post"
+      enctype="application/x-www-form-urlencoded"
+      name="login-form"
+      action="/login">
+
+    <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username">
+    </div>
+
+    <div>
+        <div class="grid grid-cols-2">
+            <label for="password">Password:</label>
+            <a href="/forgot-password" class="text-right">Forgot Password?</a>
+        </div>
+        <input type="password" id="password" name="password">
+    </div>
+
+    <input type="submit" name="submit" value="Log in">
+    <input type="hidden" name="__csrf" value="{{ csrf_token }}">
+
+</form>
